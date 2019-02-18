@@ -11,7 +11,6 @@ const ShopList = ({ shops }) => {
             )
         }
     )
-    
     return (
         <div className="project-list section">
             { newShops }
