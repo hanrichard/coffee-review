@@ -6,6 +6,8 @@ const ShopSummary = ({shop}) => {
         <div className="card">
             <div className="card-content">
                 <span className="card-title">{shop.shopname} titile</span>
+                <p>{shop.shoplat}</p>
+                <p>{shop.shoplon}</p>
            </div>
         </div>
     )

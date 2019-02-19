@@ -1,9 +1,6 @@
 const initState = {
-    shops: [
-        {id: 1, title: '1test test test test ', content: '1 test test '},
-        {id: 2, title: '2test test test test ', content: '2 test test '},
-        {id: 3, title: '3test test test test ', content: '3 test test '},
-    ]
+    shops: [],
+    shopid: ''
 }
 
 const shopReducer = (state = initState, action) => {
@@ -14,6 +11,12 @@ const shopReducer = (state = initState, action) => {
         case 'CREATE_PROJECT_ERR':
             console.log('create project err', action.err)
             return state;
+        // case 'FIND_SHOPID':
+        //     console.log('FIND_SHOPID', action.shopid)
+        //     return {
+        //         ...state, 
+        //         shopid: "oK4i7b6A8f25d1RvGlg5"
+        //     };
         default:
             return state;
     }

@@ -16,11 +16,11 @@ const ShopDetails = (props) => {
             <div className="card">
                 <div className="card-content">
                     <div className="card-titile">{shop.shopname}</div>
-                    {/* <p>{project.content }</p> */}
-                </div>
-                <div className="card-action">
-                    {/* <div className="">posted by {project.authorFirstname}  {project.authorLastname}</div>
-                    <div className="">posted date {moment(project.createdAt.toDate()).calendar()}</div> */}
+                    <div className="card-content">
+                        <p>shop address</p>
+                        <p>{shop.shoplat}</p>
+                        <p>{shop.shoplon}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@ const ShopDetails = (props) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    // console.log(state)
+    console.log(ownProps)
     const id = ownProps.match.params.id;
     const shops = state.firestore.data.shops;
     const shop = shops?shops[id] : null
