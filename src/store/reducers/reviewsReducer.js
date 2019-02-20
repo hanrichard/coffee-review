@@ -1,9 +1,5 @@
 const initState = {
-    reviews: [
-        {id: 1, title: '1test test test test ', content: '1 test test '},
-        {id: 2, title: '2test test test test ', content: '2 test test '},
-        {id: 3, title: '3test test test test ', content: '3 test test '},
-    ]
+    reviews: []
 }
 
 const reviewsReducer = (state = initState, action) => {
