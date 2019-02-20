@@ -7,8 +7,21 @@ import moment from 'moment';
 
 
 const ShopDetails = (props) => {
-  const {shop, reviews} = props;
-    const render = () =>{
+    const {shop, reviews, users} = props;
+
+    console.log(users)
+    const userRender = (userid) => {
+        if(users) {
+            const user = users.filter(
+                user => user.id === userid
+            )
+            return user[0].name
+        } else {
+            return <span>no user found</span>
+        }
+    }
+    
+    const reviewRender = () =>{
         if(reviews) {
           return (
             reviews.filter(
@@ -20,7 +33,9 @@ const ShopDetails = (props) => {
                                 <p>
                                     <b>review content:</b> {review.review} +  <br/>
                                     <b>shopid:</b> {review.shopid} + <br/>
-                                    <b>userid:</b> {review.userid} 
+                                    <b>userid:</b> {review.userid} + <br/>
+                                    <b>user name:</b>   
+                                        {userRender(review.userid)}
                                     <br /><br />
                                 </p>
                         </div>
@@ -46,7 +61,7 @@ const ShopDetails = (props) => {
                         <p>{shop.shoplat}</p>
                         <p>{shop.shoplon}</p>
                         <hr />
-                        {render()}
+                        {reviewRender()}
                     </div>
                 </div>
             </div>
@@ -63,10 +78,12 @@ const mapStateToProps = (state, ownProps) => {
     const shops = state.firestore.data.shops;
     const shop = shops?shops[id] : null;
     const reviews = state.firestore.ordered.reviews
+    const users = state.firestore.ordered.users
 
     return {
         shop: shop, 
-        reviews: reviews
+        reviews: reviews,
+        users: users
     }
 }
 
@@ -75,5 +92,6 @@ export default compose(
     firestoreConnect([
         { collection: 'shops'},
         { collection: 'reviews'},
+        { collection: 'users'},
     ])
 )(ShopDetails)
