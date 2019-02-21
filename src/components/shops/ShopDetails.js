@@ -2,46 +2,65 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import moment from 'moment';
 
 
 const ShopDetails = (props) => {
     const {shop, reviews, users} = props;
 
-    console.log(users)
     const userRender = (userid) => {
         if(users) {
             const user = users.filter(
                 user => user.id === userid
             )
-            return user[0].name
+            return user[0].name.toUpperCase()
         } else {
             return <span>no user found</span>
         }
     }
-    
-    const reviewRender = () =>{
+
+    const totalReviews = () => {
         if(reviews) {
-          return (
+            const relativeReviews = reviews.filter(review => review.shopid === props.match.params.id)
+            const relativeReviewsTotal = relativeReviews.reduce(function (accumulator, review) {
+                return accumulator + review.coffee;
+            }, 0)
+            const relativeReviewsNumber = relativeReviews.length
+
+            return (
+                <div>
+                    <div><b>total review number</b>: {relativeReviewsNumber}</div>
+                    <div><b>total review score</b>: {relativeReviewsTotal/relativeReviewsNumber}</div>
+                </div>
+
+            )
+        }
+        else {
+            return <span>no total review</span>
+        }
+    }
+
+    const reviewRender = () => {
+        if(reviews) {
+            return (   
             reviews.filter(
                 review => review.shopid === props.match.params.id).map(
                     review => {
                         return (
                             <div key={review.id}>
-                                <h3>this shop's reviews</h3>
+                                <h4><b>{userRender(review.userid)}</b>'s reviews</h4>
                                 <p>
                                     <b>review content:</b> {review.review} +  <br/>
-                                    <b>shopid:</b> {review.shopid} + <br/>
-                                    <b>userid:</b> {review.userid} + <br/>
-                                    <b>user name:</b>   
-                                        {userRender(review.userid)}
-                                    <br /><br />
+                                    <b>shopid:</b> {review.shopid} <br/>
+                                    <b>userid:</b> {review.userid} <br/>
+                                    <b>coffee:</b> {review.coffee} <br/>
                                 </p>
-                        </div>
+                            </div>
                         )
-                    })
+                    }
                 )
+            )
         }
         else {
           return <div className="container center">loading...</div>
@@ -53,14 +72,22 @@ const ShopDetails = (props) => {
   if(shop) {
       return (
         <div className="container section">
+        <div className="card">
+            <Link to={'/shops'} >go back</Link>
+        </div>
             <div className="card">
                 <div className="card-content">
-                    <div className="card-titile">{shop.shopname}</div>
-                    <div className="card-content">
-                        <p>shop address</p>
+                    <div className="card-titile">
+                        <h3>{shop.shopname}</h3>
+                    </div>
+                    <div className="card-content">  
+                        <p><b>address:</b> {shop.address} {shop.suburb}</p>
                         <p>{shop.shoplat}</p>
                         <p>{shop.shoplon}</p>
                         <hr />
+                        {totalReviews()}
+                        <hr />
+
                         {reviewRender()}
                     </div>
                 </div>
@@ -77,13 +104,11 @@ const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id;
     const shops = state.firestore.data.shops;
     const shop = shops?shops[id] : null;
-    const reviews = state.firestore.ordered.reviews
-    const users = state.firestore.ordered.users
 
     return {
         shop: shop, 
-        reviews: reviews,
-        users: users
+        reviews: state.firestore.ordered.reviews,
+        users: state.firestore.ordered.users
     }
 }
 
