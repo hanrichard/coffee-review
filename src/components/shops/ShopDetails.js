@@ -63,14 +63,35 @@ class ShopDetails extends Component {
         return 0;
     }
     
+    const sortbytimeOldOrder = (a, b) => {
+        if(a.createdat > b.createdat) return 1;
+        if(a.createdat < b.createdat) return -1;
+        return 0;
+    }
+
+    const sortbytimeNewOrder = (a, b) => {
+        if(a.createdat < b.createdat) return 1;
+        if(a.createdat > b.createdat) return -1;
+        return 0;
+    }
+    
     const reviewRender = () => {
         if(reviews) {
             const relativeReviews = reviews.filter(review => review.shopid === this.props.match.params.id)
 
-            const newrelativeReviews = 
-            this.state.value === 'highest' ?
-            relativeReviews.sort(sortbycoffeeHighOrder) : 
-            relativeReviews.sort(sortbycoffeeLowOrder);
+            let newrelativeReviews = relativeReviews.sort(sortbycoffeeHighOrder) 
+            if(this.state.value === 'highest') {
+                newrelativeReviews = relativeReviews.sort(sortbycoffeeHighOrder)
+            }
+            if(this.state.value === 'lowest') {
+                newrelativeReviews = relativeReviews.sort(sortbycoffeeLowOrder)
+            }
+            if(this.state.value === 'newest') {
+                newrelativeReviews = relativeReviews.sort(sortbytimeNewOrder)
+            }
+            if(this.state.value === 'oldest') {
+                newrelativeReviews = relativeReviews.sort(sortbytimeOldOrder)
+            }
 
             return (   
                 newrelativeReviews.map(
@@ -84,6 +105,8 @@ class ShopDetails extends Component {
                                     <b>userid:</b> {review.userid} <br/>
                                     <b>coffee:</b> {review.coffee} <br/>
                                 </p>
+                                <div><b>review date:</b> {moment(review.createdat.toDate()).calendar()}</div>
+
                             </div>
                         )
                     }
@@ -115,8 +138,10 @@ class ShopDetails extends Component {
                         <hr />
                         <form>
                             <select className="select" value={this.state.value} onChange={this.handleChange}>
-                                <option defaultValue="highest">highest</option>
-                                <option value="lowest">lowest</option>
+                                <option defaultValue="highest">highest review</option>
+                                <option value="lowest">lowest review</option>
+                                <option value="newest">newest review</option>
+                                <option value="oldest">oldest review</option>
                             </select>
                         </form>
                         <hr />
