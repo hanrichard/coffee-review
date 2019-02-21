@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
@@ -6,8 +6,19 @@ import { Redirect, Link } from 'react-router-dom'
 import moment from 'moment';
 
 
-const ShopDetails = (props) => {
-    const {shop, reviews, users} = props;
+class ShopDetails extends Component {
+    state = {
+        value: 'highest'
+    }
+
+    handleChange = (event) => {
+        this.setState({value: event.target.value}); 
+    }
+
+    render() {
+    const {shop, reviews, users} = this.props;
+
+
 
     const userRender = (userid) => {
         if(users) {
@@ -22,7 +33,7 @@ const ShopDetails = (props) => {
 
     const totalReviews = () => {
         if(reviews) {
-            const relativeReviews = reviews.filter(review => review.shopid === props.match.params.id)
+            const relativeReviews = reviews.filter(review => review.shopid === this.props.match.params.id)
             const relativeReviewsTotal = relativeReviews.reduce(function (accumulator, review) {
                 return accumulator + review.coffee;
             }, 0)
@@ -40,12 +51,29 @@ const ShopDetails = (props) => {
             return <span>no total review</span>
         }
     }
+    const sortbycoffeeHighOrder = (a, b) => {
+        if(a.coffee < b.coffee) return 1;
+        if(a.coffee > b.coffee) return -1;
+        return 0;
+    }
 
+    const sortbycoffeeLowOrder = (a, b) => {
+        if(a.coffee > b.coffee) return 1;
+        if(a.coffee < b.coffee) return -1;
+        return 0;
+    }
+    
     const reviewRender = () => {
         if(reviews) {
+            const relativeReviews = reviews.filter(review => review.shopid === this.props.match.params.id)
+
+            const newrelativeReviews = 
+            this.state.value === 'highest' ?
+            relativeReviews.sort(sortbycoffeeHighOrder) : 
+            relativeReviews.sort(sortbycoffeeLowOrder);
+
             return (   
-            reviews.filter(
-                review => review.shopid === props.match.params.id).map(
+                newrelativeReviews.map(
                     review => {
                         return (
                             <div key={review.id}>
@@ -85,6 +113,13 @@ const ShopDetails = (props) => {
                         <p>{shop.shoplat}</p>
                         <p>{shop.shoplon}</p>
                         <hr />
+                        <form>
+                            <select className="select" value={this.state.value} onChange={this.handleChange}>
+                                <option defaultValue="highest">highest</option>
+                                <option value="lowest">lowest</option>
+                            </select>
+                        </form>
+                        <hr />
                         {totalReviews()}
                         <hr />
 
@@ -98,7 +133,7 @@ const ShopDetails = (props) => {
       return <div className="container center">loading...</div>
   }
 }
-
+}
 const mapStateToProps = (state, ownProps) => {
     console.log(state)
     const id = ownProps.match.params.id;
