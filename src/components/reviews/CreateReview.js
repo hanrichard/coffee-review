@@ -10,25 +10,28 @@ class CreateReview extends Component {
         this.state = {
             coffee: 5,
             review: '',
-            userid: 'YgXNhVSeD9b7NJaAiLAQZRoPpac2',
+            userid: this.props.userid,
             shopid: this.props.shopid,
             submitted: false
         }
     }
 
     handleChange = (e) => {
+        // this.setState({
+        //     coffee: parseInt(this.state.coffee),
+        //     review: this.state.review
+        // })
+
         this.setState({
-            coffee: parseInt(this.state.coffee),
-            review: this.state.review
+            [e.target.id]: e.target.value
         })
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
+        console.log(this.state)
         this.setState({submitted: true})
-        this
-            .props
-            .createReview(this.state)
+        this.props.createReview(this.state)
         // this.props.history.push('/')
         console.log(this.state)
     }
@@ -36,7 +39,7 @@ class CreateReview extends Component {
     render() {
         const {auth, shop, shopid} = this.props;
         // if(!auth.uid) return <Redirect to='/signin' />
-
+        // console.log(auth.uid)
         if (this.state.submitted) {
             return <h1>thanks for your review</h1>
         } else {

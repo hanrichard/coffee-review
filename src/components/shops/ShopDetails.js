@@ -18,16 +18,17 @@ class ShopDetails extends Component {
     }
 
     render() {
-        const {shop, reviews, users} = this.props;
+        const {shop, reviews, users, auth} = this.props;
         const shopid=this.props.match.params.id;
         
-
+        // console.log(auth.uid)
         const userRender = (userid) => {
             if(users) {
-                const user = users.filter(
+                let newUsers = users;
+                let user = newUsers.filter(
                     user => user.id === userid
-                )
-                // return user[0].name.toUpperCase()
+                )[0]
+                return user.name.toUpperCase()
             } else {
                 return <span>no user found</span>
             }
@@ -37,7 +38,7 @@ class ShopDetails extends Component {
             if(reviews) {
                 const relativeReviews = reviews.filter(review => review.shopid === shopid)
                 const relativeReviewsTotal = relativeReviews.reduce(function (accumulator, review) {
-                    return accumulator + review.coffee;
+                    return accumulator + parseInt(review.coffee);
                 }, 0)
                 const relativeReviewsNumber = relativeReviews.length
 
@@ -103,7 +104,7 @@ class ShopDetails extends Component {
                                 <div key={review.id} className="">
                                     <h4><b>{userRender(review.userid)}</b>'s reviews</h4>
                                     <p>
-                                        <b>review content:</b> {review.review} +  <br/>
+                                        <b>review content:</b> {review.review} <br/>
                                         <b>coffee:</b> {review.coffee} <br/>
                                     </p>
                                     <div><b>review date:</b> {moment(review.createdat.toDate()).calendar()}</div>
@@ -141,7 +142,9 @@ class ShopDetails extends Component {
                             <hr />
                             <CreateReview 
                                 shop={shop} 
-                                shopid={shopid}/>
+                                shopid={shopid}
+                                userid={auth.uid}
+                                />
                             <hr />
 
                             <form>
@@ -174,7 +177,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         shop: shop, 
         reviews: state.firestore.ordered.reviews,
-        users: state.firestore.ordered.users
+        users: state.firestore.ordered.users,
+        auth: state.firebase.auth
     }
 }
 
