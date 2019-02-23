@@ -10,7 +10,7 @@ class CreateReview extends Component {
         this.state = {
             coffee: 5,
             review: '',
-            userid: 'eR7d6DMsQgnFyY2zE2fi',
+            userid: 'YgXNhVSeD9b7NJaAiLAQZRoPpac2',
             shopid: this.props.shopid,
             submitted: false
         }
@@ -18,7 +18,8 @@ class CreateReview extends Component {
 
     handleChange = (e) => {
         this.setState({
-            [e.target.id]: e.target.value
+            coffee: parseInt(this.state.coffee),
+            review: this.state.review
         })
     }
 
@@ -48,7 +49,13 @@ class CreateReview extends Component {
 
                         <div className="input-file">
                             <label>coffee quality</label>
-                            <input required type='number' id="coffee" onChange={this.handleChange}/>
+                            <input
+                                required
+                                type='number'
+                                id="coffee"
+                                min="1"
+                                max="5"
+                                onChange={this.handleChange}/>
                         </div>
 
                         <div className="input-file">
