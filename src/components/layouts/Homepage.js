@@ -8,7 +8,7 @@ const Homepage = (props) => {
     // console.log(auth)
     // const links = auth.uid ? <Signedinlink profile={profile}/> : <Signoutlink /> 
     return (
-        <div>hoempage</div>
+        <h1>welcome to <b>north sydney coffee review</b></h1>
     )
 }
 

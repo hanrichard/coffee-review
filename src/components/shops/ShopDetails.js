@@ -4,6 +4,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
 import { Redirect, Link } from 'react-router-dom'
 import moment from 'moment';
+import CreateReview from '../reviews/CreateReview';
+
 
 
 class ShopDetails extends Component {
@@ -11,14 +13,15 @@ class ShopDetails extends Component {
         value: 'highest'
     }
 
+
     handleChange = (event) => {
         this.setState({value: event.target.value}); 
     }
 
     render() {
     const {shop, reviews, users} = this.props;
-
-
+    const shopid=this.props.match.params.id;
+    
 
     const userRender = (userid) => {
         if(users) {
@@ -33,7 +36,7 @@ class ShopDetails extends Component {
 
     const totalReviews = () => {
         if(reviews) {
-            const relativeReviews = reviews.filter(review => review.shopid === this.props.match.params.id)
+            const relativeReviews = reviews.filter(review => review.shopid === shopid)
             const relativeReviewsTotal = relativeReviews.reduce(function (accumulator, review) {
                 return accumulator + review.coffee;
             }, 0)
@@ -77,7 +80,7 @@ class ShopDetails extends Component {
     
     const reviewRender = () => {
         if(reviews) {
-            const relativeReviews = reviews.filter(review => review.shopid === this.props.match.params.id)
+            const relativeReviews = reviews.filter(review => review.shopid === shopid)
 
             let newrelativeReviews = relativeReviews.sort(sortbycoffeeHighOrder) 
             if(this.state.value === 'highest') {
@@ -101,9 +104,7 @@ class ShopDetails extends Component {
                                 <h4><b>{userRender(review.userid)}</b>'s reviews</h4>
                                 <p>
                                     <b>review content:</b> {review.review} +  <br/>
-                                    <b>shopid:</b> {review.shopid} <br/>
-                                    <b>userid:</b> {review.userid} <br/>
-                                    <b>coffee:</b> {review.coffee} <br/>
+                                     <b>coffee:</b> {review.coffee} <br/>
                                 </p>
                                 <div><b>review date:</b> {moment(review.createdat.toDate()).calendar()}</div>
 
@@ -136,6 +137,13 @@ class ShopDetails extends Component {
                         <p>{shop.shoplat}</p>
                         <p>{shop.shoplon}</p>
                         <hr />
+                        {totalReviews()}
+                        <hr />
+                        <CreateReview 
+                            shop={shop} 
+                            shopid={shopid}/>
+                        <hr />
+
                         <form>
                             <select className="select" value={this.state.value} onChange={this.handleChange}>
                                 <option defaultValue="highest">highest review</option>
@@ -145,8 +153,7 @@ class ShopDetails extends Component {
                             </select>
                         </form>
                         <hr />
-                        {totalReviews()}
-                        <hr />
+                        
 
                         {reviewRender()}
                     </div>

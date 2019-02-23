@@ -1,22 +1,22 @@
-export const createProject = project => {
+export const createReview = review => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore =  getFirestore();
-        const profile = getState().firebase.profile;
-        const authorId = getState().firebase.auth.uid;
+        // const profile = getState().firebase.profile;
+        // const authorId = getState().firebase.auth.uid;
 
-        firestore.collection('projects').add({
-            ...project,
-            authorFirstname: profile.firstname,
-            authorLastname: profile.lastname,
-            authorId: authorId,
-            createdAt: new Date()
+        firestore.collection('reviews').add({
+            ...review,
+            // authorFirstname: profile.firstname,
+            // authorLastname: profile.lastname,
+            // authorId: authorId,
+            createdat: new Date()
         }).then(()=>(dispatch({
-            type: 'CREATE_PROJECT',
-            project
+            type: 'CREATE_REVIEW',
+            review
             }) 
         )).catch((err)=>{
             dispatch({
-                type: 'CCREATE_PROJECT_ERROR', err
+                type: 'CREATE_REVIEW_ERROR', err
             })
         })    
     }

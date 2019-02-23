@@ -11,7 +11,7 @@ const Nav = (props) => {
     return (
         <nav className="nav-wrapper grey darken-3">
             <div className="container">
-                <Link to='/' className=" floating left">logo</Link>
+                <Link to='/' className=" floating left">COFFEE REVIEW</Link>
 
                 <ul className="right">
                     <li>

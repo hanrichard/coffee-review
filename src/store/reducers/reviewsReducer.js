@@ -4,10 +4,10 @@ const initState = {
 
 const reviewsReducer = (state = initState, action) => {
     switch (action.type) {
-        case 'CREATE_PROJECT':
-            console.log('create project', action.project)
+        case 'CREATE_REVIEW':
+            console.log('create project', action.review)
             return state;
-        case 'CREATE_PROJECT_ERR':
+        case 'CREATE_REVIEW_ERR':
             console.log('create project err', action.err)
             return state;
         default:
