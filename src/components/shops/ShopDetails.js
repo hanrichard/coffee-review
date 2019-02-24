@@ -185,10 +185,13 @@ const mapStateToProps = (state, ownProps) => {
     console.log(state)
     const id = ownProps.match.params.id;
     const shops = state.firestore.data.shops;
-    const shop = shops
-        ? shops[id]
-        : null;
-    return {shop: shop, reviews: state.firestore.ordered.reviews, users: state.firestore.ordered.users, auth: state.firebase.auth}
+    const shop = shops? shops[id]: null;
+    return {
+        shop: shop, 
+        reviews: state.firestore.ordered.reviews, 
+        users: state.firestore.ordered.users, 
+        auth: state.firebase.auth
+    }
 }
 
 export default compose(connect(mapStateToProps), firestoreConnect([
