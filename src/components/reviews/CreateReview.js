@@ -87,7 +87,7 @@ class CreateReview extends Component {
                         </div>
 
                         <div className="input-file">
-                            <button className="btn pink" onClick={this.handleOnClick}>create</button>
+                            <button className="btn pink" onClick={this.handleOnClick}>submit your review</button>
                         </div>
                     </form>
                 </div>
