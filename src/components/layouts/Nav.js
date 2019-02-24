@@ -14,16 +14,16 @@ const Nav = (props) => {
             <div className="container">
                 <Link to='/' className=" floating left">COFFEE REVIEW</Link>
 
+                { links }
+
                 <ul className="right">
                     <li>
-                        <Link to='/shops' className=" floating right">shops</Link>
+                        <Link to='/shops' className=" floating right">Shops</Link>
                     </li>
                     <li>
-                        <Link to='/reviews' className=" floating right">reviews</Link>
+                        <Link to='/reviews' className=" floating right">Reviews</Link>
                     </li>
                 </ul>
-
-                { links }
                 
             </div>
         </nav>

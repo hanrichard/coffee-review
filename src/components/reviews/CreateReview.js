@@ -2,19 +2,24 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createReview} from '../../store/actions/shopsActions'
 import {Redirect} from 'react-router-dom'
+import StarRatingComponent from 'react-star-rating-component';
 
 class CreateReview extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            coffee: 5,
+            coffee: 0,
             review: '',
             userid: this.props.userid,
             shopid: this.props.shopid,
             submitted: false,
-            loggedin: false,
+            loggedin: false
         }
+    }
+
+    onStarClick(nextValue, prevValue, name) {
+        this.setState({coffee: nextValue});
     }
 
     handleChange = (e) => {
@@ -25,52 +30,51 @@ class CreateReview extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        if(this.state.loggedin) {
-            this.setState({
-                submitted: true,
-            })
-            this.props.createReview(this.state)
-        }
-        else {
+        if (this.state.loggedin) {
+            this.setState({submitted: true})
+            this
+                .props
+                .createReview(this.state)
+        } else {
             alert('login first')
             // this.props.history.push('/signin')
         }
-    
+
         // this.props.history.push('/')
     }
 
     render() {
-        const { auth } = this.props;
-        if(auth.uid) {
+        const {auth} = this.props;
+        if (auth.uid) {
             this.state.loggedin = true
-        }
-        else {
+        } else {
             this.state.loggedin = false
         }
 
         console.log(this.state.loggedin)
 
-        // if(!auth.uid) return <Redirect to='/signin' />
-        // console.log(auth.uid)
+        // if(!auth.uid) return <Redirect to='/signin' /> console.log(auth.uid)
         if (this.state.submitted) {
             return <h1>thanks for your review</h1>
         } else {
             return (
-                <div className="container section">
-                    <form className="" onSubmit={this.handleSubmit}>
+                <div className="card">
+                    <form className="card-content" onSubmit={this.handleSubmit}>
                         <h5>
-                            <b>add a review</b>
+                            Write a review for <b> {this.props.shopname} </b>
                         </h5>
 
                         <div className="input-file">
-                            <label>coffee quality</label>
-                            <input
-                                required
-                                type='number'
-                                id="coffee"
-                                min="1"
-                                max="5"
-                                onChange={this.handleChange}/>
+
+                        <div className="StarRatingComponent-wrapper">
+                            <label>coffee quality </label>
+                            <StarRatingComponent
+                                className="StarRatingComponent"
+                                name="rate1"
+                                starCount={5}
+                                value={this.state.coffee}
+                                onStarClick={this.onStarClick.bind(this)}/>
+                                </div>
                         </div>
 
                         <div className="input-file">
@@ -83,10 +87,7 @@ class CreateReview extends Component {
                         </div>
 
                         <div className="input-file">
-                            <button 
-                                className="btn pink" 
-                                onClick={this.handleOnClick}
-                            >create</button>
+                            <button className="btn pink" onClick={this.handleOnClick}>create</button>
                         </div>
                     </form>
                 </div>
@@ -96,9 +97,7 @@ class CreateReview extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        auth: state.firebase.auth
-    }
+    return {auth: state.firebase.auth}
 }
 
 const mapDispatchToProps = dispatch => {
@@ -108,4 +107,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateReview)
-// export default CreateReview

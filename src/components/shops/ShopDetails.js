@@ -5,6 +5,8 @@ import {compose} from 'redux'
 import {Redirect, Link} from 'react-router-dom'
 import moment from 'moment';
 import CreateReview from '../reviews/CreateReview';
+import StarRatingComponent from 'react-star-rating-component';
+
 
 class ShopDetails extends Component {
     state = {
@@ -19,7 +21,6 @@ class ShopDetails extends Component {
         const {shop, reviews, users, auth} = this.props;
         const shopid = this.props.match.params.id;
 
-        // console.log(auth.uid)
         const userRender = (userid) => {
             if (users) {
                 let newUsers = users;
@@ -39,11 +40,15 @@ class ShopDetails extends Component {
                 const relativeReviewsNumber = relativeReviews.length
 
                 return (
-                    <div>
-                        <div>
-                            <b>total review number</b>: {relativeReviewsNumber}</div>
-                        <div>
-                            <b>total review score</b>: {parseFloat(relativeReviewsTotal / relativeReviewsNumber).toFixed(1)}</div>
+                    <div className="shopReview">
+                        <div className="shopReview-total">
+                            <h5 className="StarRatingComponent-wrapper">
+                            <b>{parseFloat(relativeReviewsTotal / relativeReviewsNumber).toFixed(1)} 
+                            </b></h5>
+                        </div>
+                        <div className="shopReview-reviews">
+                            {relativeReviewsNumber} reviews
+                        </div>
                     </div>
 
                 )
@@ -103,21 +108,26 @@ class ShopDetails extends Component {
 
                 return (newrelativeReviews.map(review => {
                     return (
-                        <div key={review.id} className="">
-                            <h4>
-                                <b>{userRender(review.userid)}</b>'s reviews</h4>
-                            <p>
-                                <b>review content:</b>
+                        <div key={review.id} className="reviewCard">
+                            <h5>
+                                <b>{userRender(review.userid)}</b>'s reviews
+                            </h5>
+                            <div className="reviewCard-content">
+                            <div className="StarRatingComponent-wrapper">
+                                <b>coffee: </b>
+                                <StarRatingComponent 
+                                    className="StarRatingComponent"
+                                    name="test"
+                                    value={parseFloat(review.coffee)}/>
+                            </div>
+
+                                <b>Review: </b>
                                 {review.review}
-                                <br/>
-                                <b>coffee:</b>
-                                {review.coffee}
-                                <br/>
-                            </p>
-                            <div>
-                                <b>review date:</b>
+                                
+                                <div className="review-small">
+                                <b>Date: </b>
                                 {moment(review.createdat.toDate()).calendar()}</div>
-                            <hr/>
+                            </div>
                         </div>
                     )
                 }))
@@ -126,32 +136,30 @@ class ShopDetails extends Component {
             }
         }
 
-        //   if(!auth.uid) return <Redirect to="/signin" />
-
         if (shop) {
             return (
                 <div className="container section">
-                    <div className="card">
-                        <Link to={'/shops'}>go back</Link>
+                    <div className="">
+                        <Link to={'/shops'}>Go back</Link>
                     </div>
-                    <div className="card">
+                    <div className="">
                         <div className="card-content">
-                            <div className="card-titile">
+                            <div className="card-titile reviewTotal-card-titile">
                                 <h3>{shop.shopname}</h3>
+                                {totalReviews()}
                             </div>
                             <div className="card-content">
                                 <p>
-                                    <b>address:</b>
-                                    {shop.address}
+                                    <b>Address: </b>
+                                    {shop.address}, 
                                     {shop.suburb}</p>
                                 <p>{shop.shoplat}</p>
                                 <p>{shop.shoplon}</p>
-                                <hr/> {totalReviews()}
                                 <hr/>
-                                <CreateReview shop={shop} shopid={shopid} userid={auth.uid}/>
+                                <CreateReview shopname={shop.shopname} shopid={shopid} userid={auth.uid}/>
                                 <hr/>
 
-                                <form>
+                                <form className="select-wrapper">
                                     <select
                                         className="select"
                                         value={this.state.value}

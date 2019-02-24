@@ -41,7 +41,7 @@ class Signin extends Component {
 
 
             <div className="input-file">
-                <button className="btn pink">sign in</button>
+                <button className="btn pink">Sign in</button>
 
                 <div className=""> {
                     authError? <p>{authError}</p>: null

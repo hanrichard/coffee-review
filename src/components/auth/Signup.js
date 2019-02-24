@@ -49,7 +49,7 @@ class Signup extends Component {
                     </div>
 
                     <div className="input-file">
-                        <button className="btn pink">sign up</button>
+                        <button className="btn pink">Sign up</button>
 
                         <div>{authError
                                 ? <p>{authError}</p>
