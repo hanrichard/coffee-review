@@ -24,10 +24,11 @@ class Signin extends Component {
   render() {
       const {authError, auth} = this.props;
       if(auth.uid) return <Redirect to='/' />
+
     return (
-      <div className="container">
+      <div className="container card login-page">
         <form className="" onSubmit={this.handleSubmit}>
-            <h5>sign in</h5>
+            <h5>Sign in</h5>
 
             <div className="input-file">
                 <label>email</label>

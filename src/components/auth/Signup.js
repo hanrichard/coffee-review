@@ -29,9 +29,9 @@ class Signup extends Component {
             return <Redirect to='/'/>
 
         return (
-            <div className="container">
+            <div className="container card login-page">
                 <form className="" onSubmit={this.handleSubmit}>
-                    <h5>sign up</h5>
+                    <h5>Sign up</h5>
 
                     <div className="input-file">
                         <label>email</label>

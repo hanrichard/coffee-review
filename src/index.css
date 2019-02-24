@@ -76,3 +76,8 @@ select {
   font-size: 12px;
   font-weight: 100;
 }
+
+.login-page {
+  margin: 50px auto;
+  padding: 10px;
+}
