@@ -12,16 +12,12 @@ class CreateReview extends Component {
             review: '',
             userid: this.props.userid,
             shopid: this.props.shopid,
-            submitted: false
+            submitted: false,
+            loggedin: false,
         }
     }
 
     handleChange = (e) => {
-        // this.setState({
-        //     coffee: parseInt(this.state.coffee),
-        //     review: this.state.review
-        // })
-
         this.setState({
             [e.target.id]: e.target.value
         })
@@ -29,15 +25,31 @@ class CreateReview extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(this.state)
-        this.setState({submitted: true})
-        this.props.createReview(this.state)
+        if(this.state.loggedin) {
+            this.setState({
+                submitted: true,
+            })
+            this.props.createReview(this.state)
+        }
+        else {
+            alert('login first')
+            // this.props.history.push('/signin')
+        }
+    
         // this.props.history.push('/')
-        console.log(this.state)
     }
 
     render() {
-        const {auth, shop, shopid} = this.props;
+        const { auth } = this.props;
+        if(auth.uid) {
+            this.state.loggedin = true
+        }
+        else {
+            this.state.loggedin = false
+        }
+
+        console.log(this.state.loggedin)
+
         // if(!auth.uid) return <Redirect to='/signin' />
         // console.log(auth.uid)
         if (this.state.submitted) {
@@ -71,7 +83,10 @@ class CreateReview extends Component {
                         </div>
 
                         <div className="input-file">
-                            <button className="btn pink">create</button>
+                            <button 
+                                className="btn pink" 
+                                onClick={this.handleOnClick}
+                            >create</button>
                         </div>
                     </form>
                 </div>
@@ -82,7 +97,7 @@ class CreateReview extends Component {
 
 const mapStateToProps = state => {
     return {
-        // auth: state.firebase.auth
+        auth: state.firebase.auth
     }
 }
 
@@ -92,5 +107,5 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(CreateReview)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateReview)
 // export default CreateReview
