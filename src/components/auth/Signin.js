@@ -32,12 +32,12 @@ class Signin extends Component {
 
             <div className="input-file">
                 <label>email</label>
-                <input type='email' id="email" onChange={this.handleChange}/>
+                <input required type='email' id="email" onChange={this.handleChange}/>
             </div>
             
             <div className="input-file">
                 <label>password</label>
-                <input type='password' id="password" onChange={this.handleChange}/>
+                <input required type='password' id="password" onChange={this.handleChange}/>
             </div>
 
 

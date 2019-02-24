@@ -20,9 +20,6 @@ const Nav = (props) => {
                     <li>
                         <Link to='/shops' className=" floating right">Shops</Link>
                     </li>
-                    <li>
-                        <Link to='/reviews' className=" floating right">Reviews</Link>
-                    </li>
                 </ul>
                 
             </div>

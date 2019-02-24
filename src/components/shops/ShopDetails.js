@@ -23,8 +23,7 @@ class ShopDetails extends Component {
 
         const userRender = (userid) => {
             if (users) {
-                let newUsers = users;
-                let user = newUsers.filter(user => user.id === userid)[0]
+                let user = users.filter(user => user.id === userid)[0]
                 return user.name
             } else {
                 return <span>no user found</span>
@@ -56,6 +55,7 @@ class ShopDetails extends Component {
                 return <span>no total review</span>
             }
         }
+
         const sortbycoffeeHighOrder = (a, b) => {
             if (a.coffee < b.coffee) 
                 return 1;
