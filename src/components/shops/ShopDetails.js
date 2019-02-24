@@ -93,6 +93,7 @@ class ShopDetails extends Component {
                 const relativeReviews = reviews.filter(review => review.shopid === shopid)
 
                 let newrelativeReviews = relativeReviews.sort(sortbycoffeeHighOrder)
+
                 if (this.state.value === 'highest') {
                     newrelativeReviews = relativeReviews.sort(sortbycoffeeHighOrder)
                 }
@@ -121,8 +122,7 @@ class ShopDetails extends Component {
                                     value={parseFloat(review.coffee)}/>
                             </div>
 
-                                <b>Review: </b>
-                                {review.review}
+                                <b>Review: </b>{review.review}
                                 
                                 <div className="review-small">
                                 <b>Date: </b>
