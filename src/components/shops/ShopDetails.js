@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {firestoreConnect} from 'react-redux-firebase';
+import {firestoreConnect, populate} from 'react-redux-firebase';
 import {compose} from 'redux'
 import {Redirect, Link} from 'react-router-dom'
 import moment from 'moment';
@@ -20,6 +20,11 @@ class ShopDetails extends Component {
     render() {
         const {shop, reviews, users, auth} = this.props;
         const shopid = this.props.match.params.id;
+
+        console.log('new line------')
+        console.log(shop)
+        console.log('new line-------')
+
 
         const userRender = (userid) => {
             if (users) {
@@ -194,12 +199,11 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default compose(connect(mapStateToProps), firestoreConnect([
-    {
-        collection: 'shops'
-    }, {
-        collection: 'reviews'
-    }, {
-        collection: 'users'
-    }
-]))(ShopDetails)
+export default compose(
+    firestoreConnect([
+        { collection: 'shops' }, 
+        { collection: 'reviews' }, 
+        { collection: 'users' }
+    ]),
+    connect(mapStateToProps), 
+)(ShopDetails)

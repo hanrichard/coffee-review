@@ -65,6 +65,8 @@ select {
 .reviewTotal-card-titile {
   display: flex;
   align-items: center;
+
+  
 }
 
 .shopReview-total .StarRatingComponent-wrapper{
