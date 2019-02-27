@@ -2,14 +2,38 @@ import React from 'react';
 import moment from 'moment';
 
 const ShopSummary = ({shop, reviews}) => {
-    const renderReview = (shopid) => {
-        if(reviews) {
-            const newreview = reviews.filter(review => review.shopid === shopid)[0];
-            return newreview.coffee
-        } else {
-            return <span>no user found</span>
+
+    const arrayToObject = (array) =>
+        array.reduce((obj, item) => {
+            obj[item.id] = item
+            return obj
+        }, {})
+    
+        const totalReviews = (shopid) => {
+            if (reviews) {
+                const relativeReviews = reviews.filter(review => review.shopid === shopid)
+                const relativeReviewsTotal = relativeReviews.reduce(function (accumulator, review) {
+                    return accumulator + parseInt(review.coffee);
+                }, 0)
+                const relativeReviewsNumber = relativeReviews.length
+
+                return (
+                    <div>
+                        <div>
+                            <span>coffee score: </span>
+                            <b>{parseFloat(relativeReviewsTotal / relativeReviewsNumber).toFixed(1)} 
+                            </b>
+                        </div>
+                        <div>
+                            <b>{relativeReviewsNumber} reviews
+                            </b>
+                        </div>
+                    </div>
+                )
+            } else {
+                return <span>no total review</span>
+            }
         }
-    };
     // console.log(review)
     return (
         <div className="card">
@@ -18,7 +42,8 @@ const ShopSummary = ({shop, reviews}) => {
                 <p>{shop.shoplat}</p>
                 <p>{shop.shoplon}</p>
                 <p>Address: {shop.address}, {shop.suburb}</p>
-                <p>coffee score: {renderReview(shop.id)} </p>
+                <p>{shop.id}</p>
+                <div>{totalReviews(shop.id)} </div>
            </div>
         </div>
     )

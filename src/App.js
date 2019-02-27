@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Nav from './components/layouts/Nav';
 import Homepage from './components/layouts/Homepage'
 import Shops from './containers/Shops'
+// import Shops from './containers/ShopsLanding'
 import Reviews from './containers/Reviews'
 import Signin from './components/auth/Signin'
 import Signup from './components/auth/Signup'
@@ -17,12 +18,13 @@ class App extends Component {
         <div className="App">
           <Nav />
           <Switch>
+            <Route path='/:suburb/:id' component={ShopDetails} />
             <Route exact path='/' component={Homepage} />
-            <Route exact path='/shops/' component={Shops} />
             <Route exact path='/reviews/' component={Reviews} />
-            <Route path='/shops/:id' component={ShopDetails} />
-            <Route path='/signin' component={Signin} /> 
-            <Route path='/signup' component={Signup} /> 
+            <Route exact path='/signin' component={Signin} /> 
+            <Route exact path='/signup' component={Signup} /> 
+            <Route exact path='/:suburb' component={Shops} />
+            {/* <Route path='/shops' component={ShopsLanding} /> */}
           </Switch>
         </div>
       </BrowserRouter>

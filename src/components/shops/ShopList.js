@@ -2,13 +2,16 @@ import React from 'react';
 import ShopSummary from './ShopSummary';
 import { Link } from 'react-router-dom';
 
-const ShopList = ({ shops, clickshop, reviews }) => {
+const ShopList = ({ shops, clickshop, reviews, suburb }) => {
     const newShops = shops && shops.map(shop => {
         return (
                 <Link key={shop.id}  
-                    to={'/shops/' + shop.id} 
+                    to={suburb + '/' + shop.id} 
                     >
-                    <ShopSummary shop = {shop} reviews={reviews}/> 
+                    <ShopSummary 
+                        shop = {shop} 
+                        reviews={reviews}
+                    /> 
                 </Link>
             )
         }

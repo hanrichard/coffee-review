@@ -18,22 +18,18 @@ class ShopDetails extends Component {
     }
 
     render() {
-        const {shop, reviews, users, auth} = this.props;
+        const {shops, shop, reviews, users, auth} = this.props;
         const shopid = this.props.match.params.id;
+        const shopsubub = this.props.match.params.suburb;
 
-        console.log('new line------')
-        console.log(shop)
-        console.log('new line-------')
+       
 
 
-        const userRender = (userid) => {
-            if (users) {
-                let user = users.filter(user => user.id === userid)[0]
-                return user.name
-            } else {
-                return <span>no user found</span>
-            }
-        }
+        const arrayToObject = (array) =>
+        array.reduce((obj, item) => {
+            obj[item.id] = item
+            return obj
+        }, {})
 
         const totalReviews = () => {
             if (reviews) {
@@ -61,62 +57,30 @@ class ShopDetails extends Component {
             }
         }
 
-        const sortbycoffeeHighOrder = (a, b) => {
-            if (a.coffee < b.coffee) 
-                return 1;
-            if (a.coffee > b.coffee) 
-                return -1;
-            return 0;
+        const userRender = (userid) => {
+            if(users) {
+                const newUsers = arrayToObject(users)
+                let user = newUsers[userid]
+                
+                if(user) {
+                    return user.name
+                }
+                else {
+                    return <span>not found</span>
+                }
+            }
         }
 
-        const sortbycoffeeLowOrder = (a, b) => {
-            if (a.coffee > b.coffee) 
-                return 1;
-            if (a.coffee < b.coffee) 
-                return -1;
-            return 0;
-        }
-
-        const sortbytimeOldOrder = (a, b) => {
-            if (a.createdat > b.createdat) 
-                return 1;
-            if (a.createdat < b.createdat) 
-                return -1;
-            return 0;
-        }
-
-        const sortbytimeNewOrder = (a, b) => {
-            if (a.createdat < b.createdat) 
-                return 1;
-            if (a.createdat > b.createdat) 
-                return -1;
-            return 0;
-        }
 
         const reviewRender = () => {
             if (reviews) {
-                const relativeReviews = reviews.filter(review => review.shopid === shopid)
-
-                let newrelativeReviews = relativeReviews.sort(sortbycoffeeHighOrder)
-
-                if (this.state.value === 'highest') {
-                    newrelativeReviews = relativeReviews.sort(sortbycoffeeHighOrder)
-                }
-                if (this.state.value === 'lowest') {
-                    newrelativeReviews = relativeReviews.sort(sortbycoffeeLowOrder)
-                }
-                if (this.state.value === 'newest') {
-                    newrelativeReviews = relativeReviews.sort(sortbytimeNewOrder)
-                }
-                if (this.state.value === 'oldest') {
-                    newrelativeReviews = relativeReviews.sort(sortbytimeOldOrder)
-                }
-
-                return (newrelativeReviews.map(review => {
+                return (reviews.map(review => {
                     return (
                         <div key={review.id} className="reviewCard">
+                            <p>{review.userid}</p>
                             <h5>
                                 <b>{userRender(review.userid)}</b>'s reviews
+                                {/* { renderconsole()} */}
                             </h5>
                             <div className="reviewCard-content">
                             <div className="StarRatingComponent-wrapper">
@@ -141,27 +105,38 @@ class ShopDetails extends Component {
             }
         }
 
-        if (shop) {
+        let newshop = shops? shops[shopid]: null;
+        console.log(newshop)
+        if (newshop) {
+            const suburbName = this.props.match.params.suburb;
             return (
                 <div className="container section">
                     <div className="">
-                        <Link to={'/shops'}>Go back</Link>
+                        <Link to={'/'}>Home 
+                        </Link>
+                        <Link to={'/'+suburbName}>
+                            /{suburbName.replace('-', ' ')}
+                        </Link>
                     </div>
                     <div className="">
                         <div className="card-content">
                             <div className="card-titile reviewTotal-card-titile">
-                                <h3>{shop.shopname}</h3>
+                                <h3>{newshop.shopname}</h3>
                                 {totalReviews()}
                             </div>
                             <div className="card-content">
                                 <p>
                                     <b>Address: </b>
-                                    {shop.address}, 
-                                    {shop.suburb}</p>
-                                <p>{shop.shoplat}</p>
-                                <p>{shop.shoplon}</p>
+                                    {newshop.address}, 
+                                    {newshop.suburb}</p>
+                                <p>{newshop.shoplat}</p>
+                                <p>{newshop.shoplon}</p>
                                 <hr/>
-                                <CreateReview shopname={shop.shopname} shopid={shopid} userid={auth.uid}/>
+                                <CreateReview 
+                                    suburb={shopsubub}
+                                    shopname={newshop.shopname} 
+                                    shopid={shopid} 
+                                    userid={auth.uid}/>
                                 <hr/>
 
                                 <form className="select-wrapper">
@@ -186,24 +161,23 @@ class ShopDetails extends Component {
         }
     }
 }
-const mapStateToProps = (state, ownProps) => {
-    console.log(state)
-    const id = ownProps.match.params.id;
-    const shops = state.firestore.data.shops;
-    const shop = shops? shops[id]: null;
-    return {
-        shop: shop, 
-        reviews: state.firestore.ordered.reviews, 
-        users: state.firestore.ordered.users, 
-        auth: state.firebase.auth
-    }
-}
 
-export default compose(
-    firestoreConnect([
-        { collection: 'shops' }, 
-        { collection: 'reviews' }, 
-        { collection: 'users' }
-    ]),
-    connect(mapStateToProps), 
-)(ShopDetails)
+export default compose(firestoreConnect((props) => [ 
+        { collection: 'users' },
+        { collection: 'shops',
+            where: [
+                ['suburb', '==', props.match.params.suburb.replace("-", " ")]
+            ] 
+        }, 
+        { collection: 'reviews',
+            where: [
+                ['shopid', '==', props.match.params.id]
+            ]  
+        }, 
+]), connect((state, ownProps) => ({
+    shops: state.firestore.data.shops,
+    users: state.firestore.ordered.users,
+    auth: state.firebase.auth,
+    reviews: state.firestore.ordered.reviews, 
+  })
+))(ShopDetails)

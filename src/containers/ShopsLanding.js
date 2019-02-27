@@ -7,30 +7,15 @@ import ShopList from '../components/shops/ShopList';
 import {clickshop} from '../store/actions/shopsActions'
 
 class Shops extends Component {
-
     render() {
-        const showshoplist = () => {
-            return (
-                <ShopList 
-                    suburb={this.props.match.params.suburb}
-                    shops={shops} 
-                    reviews={reviews}/>
-            )
-        }
-
-        
-
-        const {shops, reviews, auth, notifications } = this.props;
+        const {shops, reviews, auth, notifications} = this.props;
         // if(!auth.uid) return <Redirect to='/signin' /> console.log(this.props.shops)
-        console.log(reviews)
-        console.log(this.props.match.params.suburb)
+        console.log(this.props)
         return (
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m6">
-                        
-                        { showshoplist() }
-
+                        <ShopList shops={shops} reviews={reviews}/>
                     </div>
                     <div className="col s12 m6">
 
@@ -43,26 +28,21 @@ class Shops extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state)
     return {
         shops: state.firestore.ordered.shops,
         reviews: state.firestore.ordered.reviews,
+        // auth: state.firebase.auth, notifications:
+        // state.firestore.ordered.notifications
     }
 }
 
-export default compose(firestoreConnect((props) => [
-    {collection: 'shops',
-        where: [
-            ['suburb', '==', props.match.params.suburb.replace("-", " ")]
-        ]
-    },
-    {collection: 'reviews',
-        where: [
-            ['suburb', '==', props.match.params.suburb.replace("-", " ")]
-        ]
-    }
-]), connect((state) => ({
-    shops: state.firestore.ordered.shops,
-    reviews: state.firestore.ordered.reviews,
-  })
-    
-))(Shops)
+// const mapDispatchToProps = dispatch => {     // return {     //
+// clickshop: (shopid) => dispatch(clickshop(shopid))     // } }
+
+export default compose(connect(mapStateToProps), firestoreConnect((props) => [
+    {collection: 'shops'},
+    {collection: 'reviews'}
+    // { collection: 'shops', orderBy: ['createdAt', 'desc']},   { collection:
+    // 'notifications', limit: 3, orderBy: ['time', 'desc']}
+]))(Shops)

@@ -13,8 +13,9 @@ class CreateReview extends Component {
             review: '',
             userid: this.props.userid,
             shopid: this.props.shopid,
+            suburb: this.props.suburb.replace('-', ' '),
             submitted: false,
-            loggedin: false
+            loggedin: false, 
         }
     }
 
@@ -36,6 +37,7 @@ class CreateReview extends Component {
                 .props
                 .createReview(this.state)
         } else {
+            console.log(this.state)
             alert('login first')
             // this.props.history.push('/signin')
         }
@@ -44,7 +46,8 @@ class CreateReview extends Component {
     }
 
     render() {
-        const {auth} = this.props;
+        const {auth, suburb} = this.props;
+        console.log(suburb)
         if (auth.uid) {
             this.state.loggedin = true
         } else {
