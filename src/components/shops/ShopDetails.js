@@ -162,6 +162,8 @@ class ShopDetails extends Component {
     }
 }
 
+
+
 export default compose(firestoreConnect((props) => [ 
         { collection: 'users' },
         { collection: 'shops',
