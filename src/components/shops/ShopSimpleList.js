@@ -1,8 +1,10 @@
 import React from 'react';
-import ShopSummary from './ShopSummary';
+import ShopSummary from './ShopSimpleSummary';
 import { Link } from 'react-router-dom';
 
 const ShopSimpleList = ({ shops }) => {
+    console.log(shops)
+    
     const newShops = shops && shops.map(shop => {
         return (
                 <Link key={shop.id}  
@@ -12,6 +14,7 @@ const ShopSimpleList = ({ shops }) => {
                         shop = {shop} 
                     /> 
                 </Link>
+                
             )
         }
     )

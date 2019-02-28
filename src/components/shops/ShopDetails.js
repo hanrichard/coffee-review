@@ -20,7 +20,7 @@ class ShopDetails extends Component {
     }
 
     render() {
-        const {shops, reviews, users, auth} = this.props;
+        const {shops, reviews, users, auth, shopsOrder} = this.props;
         const shopid = this.props.match.params.id;
         const shopsubub = this.props.match.params.suburb;
 
@@ -57,11 +57,10 @@ class ShopDetails extends Component {
 
         const userRender = (userid) => {
             if(users) {
-                const newUsers = arrayToObject(users)
-                let user = newUsers[userid]
-                
+                let user = users[userid]
+                console.log(user)
                 if(user) {
-                    return user.name
+                    return user['name']
                 }
                 else {
                     return <span>not found</span>
@@ -128,25 +127,38 @@ class ShopDetails extends Component {
                                     <p>{newshop.shoplat}</p>
                                     <p>{newshop.shoplon}</p>
                                     <hr/>
-                                    <CreateReview 
-                                        suburb={shopsubub}
-                                        shopname={newshop.shopname} 
-                                        shopid={shopid} 
-                                        userid={auth.uid}/>
-                                    <hr/>
     
-                                    <form className="select-wrapper">
-                                        <select
-                                            className="select"
-                                            value={this.state.value}
-                                            onChange={this.handleChange}>
-                                            <option defaultValue="highest">highest review</option>
-                                            <option value="lowest">lowest review</option>
-                                            <option value="newest">newest review</option>
-                                            <option value="oldest">oldest review</option>
-                                        </select>
-                                    </form>
-                                    <hr/> {reviewRender()}
+                                    <div className="row">
+                                        <div className="col s12 m8">
+
+                                        <CreateReview 
+                                            suburb={shopsubub}
+                                            shopname={newshop.shopname} 
+                                            shopid={shopid} 
+                                            userid={auth.uid}/>
+                                        <br />
+                                        <hr/>
+                                        <br />
+
+                                        <form className="select-wrapper">
+                                            <select
+                                                className="select"
+                                                value={this.state.value}
+                                                onChange={this.handleChange}>
+                                                <option defaultValue="highest">highest review</option>
+                                                <option value="lowest">lowest review</option>
+                                                <option value="newest">newest review</option>
+                                                <option value="oldest">oldest review</option>
+                                            </select>
+                                        </form>
+                                            {reviewRender()}
+                                        </div>
+                                        
+                                        <div className="col s12 m4">
+                                            <h4>Coffees in nearby</h4>
+                                            <ShopSimpleList shops={shopsOrder} />
+                                        </div>
+                                    </div>    
                                 </div>
                             </div>
                         </div>
@@ -159,9 +171,8 @@ class ShopDetails extends Component {
         }
         console.log(shops)
         return (
-            <div>
+            <div className="shopdetail-layout">
                 <div>{renderShopDetial()}</div>
-                {/* <div><ShopSimpleList shops={shops} /></div> */}
             </div>
         )
     }
@@ -181,7 +192,8 @@ export default compose(firestoreConnect((props) => [
         }, 
 ]), connect((state, ownProps) => ({
     shops: state.firestore.data.shops,
-    users: state.firestore.ordered.users,
+    shopsOrder: state.firestore.ordered.shops,
+    users: state.firestore.data.users,
     auth: state.firebase.auth,
     reviews: state.firestore.ordered.reviews, 
   })

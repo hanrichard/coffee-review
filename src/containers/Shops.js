@@ -42,12 +42,6 @@ class Shops extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        shops: state.firestore.ordered.shops,
-        reviews: state.firestore.ordered.reviews,
-    }
-}
 
 export default compose(firestoreConnect((props) => [
     {collection: 'shops',
