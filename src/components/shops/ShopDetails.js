@@ -6,6 +6,8 @@ import {Redirect, Link} from 'react-router-dom'
 import moment from 'moment';
 import CreateReview from '../reviews/CreateReview';
 import StarRatingComponent from 'react-star-rating-component';
+import ShopSimpleList from './ShopSimpleList';
+
 
 
 class ShopDetails extends Component {
@@ -18,15 +20,11 @@ class ShopDetails extends Component {
     }
 
     render() {
-        const {shops, shop, reviews, users, auth} = this.props;
+        const {shops, reviews, users, auth} = this.props;
         const shopid = this.props.match.params.id;
         const shopsubub = this.props.match.params.suburb;
 
-       
-
-
-        const arrayToObject = (array) =>
-        array.reduce((obj, item) => {
+        const arrayToObject = (array) => array.reduce((obj, item) => {
             obj[item.id] = item
             return obj
         }, {})
@@ -71,16 +69,13 @@ class ShopDetails extends Component {
             }
         }
 
-
         const reviewRender = () => {
             if (reviews) {
                 return (reviews.map(review => {
                     return (
                         <div key={review.id} className="reviewCard">
-                            <p>{review.userid}</p>
                             <h5>
                                 <b>{userRender(review.userid)}</b>'s reviews
-                                {/* { renderconsole()} */}
                             </h5>
                             <div className="reviewCard-content">
                             <div className="StarRatingComponent-wrapper">
@@ -105,64 +100,72 @@ class ShopDetails extends Component {
             }
         }
 
-        let newshop = shops? shops[shopid]: null;
-        console.log(newshop)
-        if (newshop) {
-            const suburbName = this.props.match.params.suburb;
-            return (
-                <div className="container section">
-                    <div className="">
-                        <Link to={'/'}>Home 
-                        </Link>
-                        <Link to={'/'+suburbName}>
-                            /{suburbName.replace('-', ' ')}
-                        </Link>
-                    </div>
-                    <div className="">
-                        <div className="card-content">
-                            <div className="card-titile reviewTotal-card-titile">
-                                <h3>{newshop.shopname}</h3>
-                                {totalReviews()}
-                            </div>
+        const renderShopDetial = () => {
+            let newshop = shops? shops[shopid]: null;
+            if (newshop) {
+                const suburbName = this.props.match.params.suburb;
+                return (
+                    <div className="container section">
+                        <div className="">
+                            <Link to={'/'}>Home 
+                            </Link>
+                            <Link to={'/'+suburbName}>
+                                /{suburbName.replace('-', ' ')}
+                            </Link>
+                        </div>
+    
+                        <div className="">
                             <div className="card-content">
-                                <p>
-                                    <b>Address: </b>
-                                    {newshop.address}, 
-                                    {newshop.suburb}</p>
-                                <p>{newshop.shoplat}</p>
-                                <p>{newshop.shoplon}</p>
-                                <hr/>
-                                <CreateReview 
-                                    suburb={shopsubub}
-                                    shopname={newshop.shopname} 
-                                    shopid={shopid} 
-                                    userid={auth.uid}/>
-                                <hr/>
-
-                                <form className="select-wrapper">
-                                    <select
-                                        className="select"
-                                        value={this.state.value}
-                                        onChange={this.handleChange}>
-                                        <option defaultValue="highest">highest review</option>
-                                        <option value="lowest">lowest review</option>
-                                        <option value="newest">newest review</option>
-                                        <option value="oldest">oldest review</option>
-                                    </select>
-                                </form>
-                                <hr/> {reviewRender()}
+                                <div className="card-titile reviewTotal-card-titile">
+                                    <h3>{newshop.shopname}</h3>
+                                    {totalReviews()}
+                                </div>
+                                <div className="card-content">
+                                    <p>
+                                        <b>Address: </b>
+                                        {newshop.address}, 
+                                        {newshop.suburb}</p>
+                                    <p>{newshop.shoplat}</p>
+                                    <p>{newshop.shoplon}</p>
+                                    <hr/>
+                                    <CreateReview 
+                                        suburb={shopsubub}
+                                        shopname={newshop.shopname} 
+                                        shopid={shopid} 
+                                        userid={auth.uid}/>
+                                    <hr/>
+    
+                                    <form className="select-wrapper">
+                                        <select
+                                            className="select"
+                                            value={this.state.value}
+                                            onChange={this.handleChange}>
+                                            <option defaultValue="highest">highest review</option>
+                                            <option value="lowest">lowest review</option>
+                                            <option value="newest">newest review</option>
+                                            <option value="oldest">oldest review</option>
+                                        </select>
+                                    </form>
+                                    <hr/> {reviewRender()}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )
-        } else {
-            return <div className="container center">loading...</div>
+                )
+            } else {
+                return <div className="container center">loading...</div>
+            }
+
         }
+        console.log(shops)
+        return (
+            <div>
+                <div>{renderShopDetial()}</div>
+                {/* <div><ShopSimpleList shops={shops} /></div> */}
+            </div>
+        )
     }
 }
-
-
 
 export default compose(firestoreConnect((props) => [ 
         { collection: 'users' },

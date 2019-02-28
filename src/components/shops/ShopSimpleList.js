@@ -2,23 +2,18 @@ import React from 'react';
 import ShopSummary from './ShopSummary';
 import { Link } from 'react-router-dom';
 
-const ShopList = ({ shops, clickshop, reviews, suburb }) => {
+const ShopSimpleList = ({ shops }) => {
     const newShops = shops && shops.map(shop => {
         return (
-            <div key={shop.id} >
-                <Link to={'/'}>Home</Link>
-
-                <Link  
-                    to={suburb + '/' + shop.id} 
+                <Link key={shop.id}  
+                    to={shop.suburb + '/' + shop.id} 
                     >
                     <ShopSummary 
                         shop = {shop} 
-                        reviews={reviews}
                     /> 
                 </Link>
-            </div>
-            )   
-        } 
+            )
+        }
     )
 
     if(newShops) {
@@ -34,4 +29,4 @@ const ShopList = ({ shops, clickshop, reviews, suburb }) => {
 }
 
 
-export default ShopList
+export default ShopSimpleList
