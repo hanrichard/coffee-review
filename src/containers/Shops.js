@@ -18,8 +18,6 @@ class Shops extends Component {
             )
         }
 
-        
-
         const {shops, reviews, auth, notifications } = this.props;
         // if(!auth.uid) return <Redirect to='/signin' /> console.log(this.props.shops)
         console.log(reviews)

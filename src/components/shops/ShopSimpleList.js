@@ -8,13 +8,12 @@ const ShopSimpleList = ({ shops }) => {
     const newShops = shops && shops.map(shop => {
         return (
                 <Link key={shop.id}  
-                    to={shop.suburb + '/' + shop.id} 
+                    to={'/' + shop.suburb.replace(' ','-') + '/' + shop.id} 
                     >
                     <ShopSummary 
                         shop = {shop} 
                     /> 
                 </Link>
-                
             )
         }
     )

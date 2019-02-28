@@ -20,7 +20,9 @@ class CreateReview extends Component {
     }
 
     onStarClick(nextValue, prevValue, name) {
-        this.setState({coffee: nextValue});
+        this.setState({
+            coffee: nextValue,
+        });
     }
 
     handleChange = (e) => {
@@ -84,6 +86,7 @@ class CreateReview extends Component {
                             <label>content</label>
                             <textarea
                                 required
+                                placeholder={"write a review for "+ this.props.shopname}
                                 className="materialize-textarea"
                                 id="review"
                                 onChange={this.handleChange}/>
