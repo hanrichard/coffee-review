@@ -7,14 +7,14 @@ import moment from 'moment';
 import CreateReview from '../reviews/CreateReview';
 import StarRatingComponent from 'react-star-rating-component';
 import ShopSimpleList from './ShopSimpleList';
-import SimpleMap from '../maps/SimpleMap';
+import GoogleMapReact from 'google-map-react';
 
 
 class ShopDetails extends Component {
     state = {
         value: 'highest'
     }
-  
+
     handleChange = (event) => {
         this.setState({value: event.target.value});
     }
@@ -23,6 +23,7 @@ class ShopDetails extends Component {
         const {shops, reviews, users, auth, shopsOrder} = this.props;
         const shopid = this.props.match.params.id;
         const shopsubub = this.props.match.params.suburb;
+        const Marker = () => <div className="marker"></div>
 
         const arrayToObject = (array) => array.reduce((obj, item) => {
             obj[item.id] = item
@@ -103,6 +104,8 @@ class ShopDetails extends Component {
             let newshop = shops? shops[shopid]: null;
             if (newshop) {
                 const suburbName = this.props.match.params.suburb;
+                let center = [newshop.shoplat, newshop.shoplon]
+                console.log(center)
                 return (
                     <div className="container section">
                         <div className="">
@@ -123,11 +126,28 @@ class ShopDetails extends Component {
                                         <b>Address: </b>
                                         {newshop.address}, 
                                         {newshop.suburb}</p>
+                                    <p>{newshop.shoplat}</p>
+                                    <p>{newshop.shoplon}</p>
                                     <hr/>
+
                                     <div>
 
-                                    <SimpleMap lat={newshop.shoplat} lon={newshop.shoplon}/>
-                                    
+                                    <div style={{ height: '300px', width: '100%' }}>
+                                        <GoogleMapReact
+                                        bootstrapURLKeys={{ key: 'AIzaSyDNu-7AYiYiQQDb_1M7LS3ssEMNaD_9Wfg' }}
+                                        defaultCenter={center}
+                                        defaultZoom={17}
+                                        >
+                                        <Marker className="marker"
+                                            lat={newshop.shoplat}
+                                            lng={newshop.shoplon}
+                                            text={'Kreyser Avrora'}
+                                        />
+                                        </GoogleMapReact>
+                                    </div>
+                                        
+
+
                                     </div>
     
                                     <div className="row">

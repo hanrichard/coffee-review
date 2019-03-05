@@ -8,13 +8,13 @@ const SimpleMap = ({lat, lon}) => {
 
   return (
     // Important! Always set the container height explicitly
-    <div style={{ height: '300px', width: '100%' }}>
+    <div className="simplemap" style={{ height: '300px', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyDNu-7AYiYiQQDb_1M7LS3ssEMNaD_9Wfg' }}
+        bootstrapURLKeys={{ key: 'AIzaSyBWuCReTeS6FxoKxUeSNJZrzjHSseJCNic' }}
         defaultCenter={center}
         defaultZoom={zoom}
       >
-        <div className="marker"
+        <span className="marker"
           lat={lat}
           lng={lon}
         />
