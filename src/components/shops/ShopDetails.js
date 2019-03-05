@@ -7,14 +7,14 @@ import moment from 'moment';
 import CreateReview from '../reviews/CreateReview';
 import StarRatingComponent from 'react-star-rating-component';
 import ShopSimpleList from './ShopSimpleList';
-
+import SimpleMap from '../maps/SimpleMap';
 
 
 class ShopDetails extends Component {
     state = {
         value: 'highest'
     }
-
+  
     handleChange = (event) => {
         this.setState({value: event.target.value});
     }
@@ -112,7 +112,6 @@ class ShopDetails extends Component {
                                 /{suburbName.replace('-', ' ')}
                             </Link>
                         </div>
-    
                         <div className="">
                             <div className="card-content">
                                 <div className="card-titile reviewTotal-card-titile">
@@ -124,9 +123,12 @@ class ShopDetails extends Component {
                                         <b>Address: </b>
                                         {newshop.address}, 
                                         {newshop.suburb}</p>
-                                    <p>{newshop.shoplat}</p>
-                                    <p>{newshop.shoplon}</p>
                                     <hr/>
+                                    <div>
+
+                                    <SimpleMap lat={newshop.shoplat} lon={newshop.shoplon}/>
+                                    
+                                    </div>
     
                                     <div className="row">
                                         <div className="col s12 m8">
@@ -188,7 +190,9 @@ export default compose(firestoreConnect((props) => [
         { collection: 'reviews',
             where: [
                 ['shopid', '==', props.match.params.id]
-            ]  
+            ],
+            // orderBy: 'coffee',
+            // limit: 8
         }, 
 ]), connect((state, ownProps) => ({
     shops: state.firestore.data.shops,

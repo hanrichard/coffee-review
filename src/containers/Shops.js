@@ -45,7 +45,8 @@ export default compose(firestoreConnect((props) => [
     {collection: 'shops',
         where: [
             ['suburb', '==', props.match.params.suburb.replace("-", " ")]
-        ]
+        ],
+    
     },
     {collection: 'reviews',
         where: [

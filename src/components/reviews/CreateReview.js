@@ -35,9 +35,7 @@ class CreateReview extends Component {
         e.preventDefault()
         if (this.state.loggedin) {
             this.setState({submitted: true})
-            this
-                .props
-                .createReview(this.state)
+            this.props.createReview(this.state)
         } else {
             console.log(this.state)
             alert('login first')
