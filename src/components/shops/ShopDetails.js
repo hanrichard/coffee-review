@@ -126,17 +126,12 @@ class ShopDetails extends Component {
                                         <b>Address: </b>
                                         {newshop.address}, 
                                         {newshop.suburb}</p>
-                                    <p>{newshop.shoplat}</p>
-                                    <p>{newshop.shoplon}</p>
                                     <hr/>
 
-                                    <div>
                                     <SimpleMap 
                                         lat={newshop.shoplat} 
                                         lon={newshop.shoplon} 
                                     />
-                                        
-                                    </div>
     
                                     <div className="row">
                                         <div className="col s12 m8">
