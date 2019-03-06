@@ -32,7 +32,7 @@ class Shops extends Component {
 
                     </div>
                     <div className="col s12 m9">
-                        {/* <MainMapList /> */}
+                        <MainMapList />
                         {/* <Notification notifications={notifications}/> */}
                     </div>
                 </div>
