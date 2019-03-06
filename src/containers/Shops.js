@@ -4,6 +4,7 @@ import {firestoreConnect} from 'react-redux-firebase'
 import {compose} from 'redux'
 import {Redirect} from 'react-router-dom'
 import ShopList from '../components/shops/ShopList';
+import MainMapList from '../components/maps/MainMapList';
 import {clickshop} from '../store/actions/shopsActions'
 
 class Shops extends Component {
@@ -25,13 +26,13 @@ class Shops extends Component {
         return (
             <div className="dashboard container">
                 <div className="row">
-                    <div className="col s12 m6">
+                    <div className="col s12 m3">
                         
                         { showshoplist() }
 
                     </div>
-                    <div className="col s12 m6">
-
+                    <div className="col s12 m9">
+                        {/* <MainMapList /> */}
                         {/* <Notification notifications={notifications}/> */}
                     </div>
                 </div>

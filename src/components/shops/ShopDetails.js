@@ -5,9 +5,9 @@ import {compose} from 'redux'
 import {Redirect, Link} from 'react-router-dom'
 import moment from 'moment';
 import CreateReview from '../reviews/CreateReview';
+import SimpleMap from '../maps/SimpleMap';
 import StarRatingComponent from 'react-star-rating-component';
 import ShopSimpleList from './ShopSimpleList';
-import GoogleMapReact from 'google-map-react';
 
 
 class ShopDetails extends Component {
@@ -131,23 +131,11 @@ class ShopDetails extends Component {
                                     <hr/>
 
                                     <div>
-
-                                    <div style={{ height: '300px', width: '100%' }}>
-                                        <GoogleMapReact
-                                        bootstrapURLKeys={{ key: 'AIzaSyDNu-7AYiYiQQDb_1M7LS3ssEMNaD_9Wfg' }}
-                                        defaultCenter={center}
-                                        defaultZoom={17}
-                                        >
-                                        <Marker className="marker"
-                                            lat={newshop.shoplat}
-                                            lng={newshop.shoplon}
-                                            text={'Kreyser Avrora'}
-                                        />
-                                        </GoogleMapReact>
-                                    </div>
+                                    <SimpleMap 
+                                        lat={newshop.shoplat} 
+                                        lon={newshop.shoplon} 
+                                    />
                                         
-
-
                                     </div>
     
                                     <div className="row">

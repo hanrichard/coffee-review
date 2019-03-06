@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import SimpleMap from '../maps/SimpleMap';
 
 const ShopSummary = ({shop, reviews}) => {
 
@@ -38,11 +39,8 @@ const ShopSummary = ({shop, reviews}) => {
     return (
         <div className="card">
             <div className="card-content">
-                <span className="card-title">{shop.shopname}</span>
-                <p>{shop.shoplat}</p>
-                <p>{shop.shoplon}</p>
-                <p>Address: {shop.address}, {shop.suburb}</p>
-                <p>{shop.id}</p>
+                <span>{shop.shopname}</span>
+                <p>Address: <br />{shop.address}, {shop.suburb}</p>
                 <div>{totalReviews(shop.id)} </div>
            </div>
         </div>
