@@ -13,7 +13,7 @@ const SimpleMap = ({lat, lon}) => {
   return (
     <div className="simplemap" style={{ height: '300px', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyBWuCReTeS6FxoKxUeSNJZrzjHSseJCNic' }}
+        bootstrapURLKeys={{ key: 'AIzaSyDNu-7AYiYiQQDb_1M7LS3ssEMNaD_9Wfg' }}
         defaultCenter={center}
         defaultZoom={zoom}
       >

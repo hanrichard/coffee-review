@@ -24,17 +24,21 @@ class Shops extends Component {
         console.log(reviews)
         console.log(this.props.match.params.suburb)
         return (
-            <div className="dashboard container">
+            <div className="dashboard">
                 <div className="row">
-                    <div className="col s12 m3">
+
+                    <div className="col s12 m9 push-m3 ">
+
+                        <MainMapList shops={shops}/>
+                    </div>
+
+
+                    <div className="col s12 m3 pull-m9">
                         
                         { showshoplist() }
 
                     </div>
-                    <div className="col s12 m9">
-                        <MainMapList />
-                        {/* <Notification notifications={notifications}/> */}
-                    </div>
+
                 </div>
             </div>
         )

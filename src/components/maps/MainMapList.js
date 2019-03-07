@@ -2,39 +2,37 @@ import {Map, Polygon, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-re
 import React, { Component } from 'react';
 
 export class MainMapList extends Component {
-    
     render() {
+        const {shops} = this.props
+        let pos = []
+        const newShops = shops && shops.map(shop => {
+            pos = {lat: shop.shoplat, lng: shop.shoplon}
+            console.log(pos)
+            return (
+                <Marker position={ pos } key={shop.id}/>
+                )
+            }
+        )
+                   
+       
         return (
+            <div>
             <Map google={this.props.google}
             initialCenter={{
-                lat:  -33.8424092,
-                lng: 151.2105247
+                lat: -33.853159,
+                lng: 151.2098305
             }}
             style={{width: '100%', height: '100vh', position: 'relative'}}
             className={'map'}
             zoom={15}>
-           
-           <Marker
-                title={'The marker`s title will appear as a tooltip.'}
-                name={'SOMA'}
-                position={{lat: -33.8543796, lng: 151.2044916}} />
-
-            <Marker
-                title={'The marker`s title will appear as a tooltip.'}
-                name={'SOMA'}
-                position={{lat: -33.8383404, lng: 151.2044915}} />
-
-            <Marker
-                title={'The marker`s title will appear as a tooltip.'}
-                name={'SOMA'}
-                position={{lat: -33.8365989, lng: 151.2016412}} />
-
+            {newShops}
             </Map>
+            </div>
         );
-      }
+    } 
     
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBWuCReTeS6FxoKxUeSNJZrzjHSseJCNic'
+  apiKey: 'AIzaSyDNu-7AYiYiQQDb_1M7LS3ssEMNaD_9Wfg'
 })(MainMapList)
