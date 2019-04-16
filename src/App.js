@@ -6,9 +6,9 @@ import Homepage from './components/layouts/Homepage'
 import Shops from './containers/Shops'
 // import Shops from './containers/ShopsLanding'
 import Reviews from './containers/Reviews'
+import ShopDetails from './containers/ShopDetails'
 import Signin from './components/auth/Signin'
 import Signup from './components/auth/Signup'
-import ShopDetails from './components/shops/ShopDetails'
 
 
 class App extends Component {

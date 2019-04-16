@@ -7,7 +7,7 @@ import moment from 'moment';
 import CreateReview from '../components/reviews/CreateReview';
 import SimpleMap from '../components/maps/SimpleMap';
 import StarRatingComponent from 'react-star-rating-component';
-import ShopSimpleList from '../components/ShopSimpleList';
+import ShopSimpleList from '../components/shops/ShopSimpleList';
 
 
 class ShopDetails extends Component {
