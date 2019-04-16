@@ -28,7 +28,6 @@ class Shops extends Component {
                 <div className="row">
 
                     <div className="col s12 m9 push-m3 ">
-
                         <MainMapList shops={shops}/>
                     </div>
 
