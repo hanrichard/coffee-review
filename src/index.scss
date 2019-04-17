@@ -93,14 +93,3 @@ select {
   position: relative;
 }
 
-.mainmapcontainer {
-  height: 400px;
-  position: relative;
-}
-
-
-@media only screen and (min-width: 600px) {
-  .mainmapcontainer {
-    height: 100%;
-  }
-}

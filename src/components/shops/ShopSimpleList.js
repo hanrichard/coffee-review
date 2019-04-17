@@ -1,6 +1,7 @@
 import React from 'react';
 import ShopSummary from './ShopSimpleSummary';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components'
 
 const ShopSimpleList = ({ shops }) => {
     console.log(shops)
