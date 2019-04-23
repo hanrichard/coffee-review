@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {firestoreConnect} from 'react-redux-firebase'
-import {compose} from 'redux'
-import {Redirect} from 'react-router-dom'
+import {compose} from 'redux';
+import {Redirect} from 'react-router-dom';
 import ShopList from '../components/shops/ShopList';
 import MainMapList from '../components/maps/MainMapList';
-import {clickshop} from '../store/actions/shopsActions'
-import styled from 'styled-components'
+import {clickshop} from '../store/actions/shopsActions';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 class Shops extends Component {
 
@@ -37,6 +38,11 @@ class Shops extends Component {
                     margin-right: -24px;
                 }
             }
+            .dashboard-nearme {
+                margin-bottom: 30px;
+                border-bottom: 1px solid #6e6e6e;
+                padding-bottom: 30px;
+            }
             .dashboard {
                 @media only screen and (min-width: 600px) {
                     overflow: hidden;
@@ -61,6 +67,11 @@ class Shops extends Component {
 
                         <div className="col s12 l3 pull-l9">
                             <div className="dashboard-list">
+                                <div className="dashboard-nearme">
+                                    <Link to="/north-sydney">
+                                        <span>North sydney coffee</span>
+                                    </Link>
+                                </div>
                                 { showshoplist() }
                             </div>
                         </div>
