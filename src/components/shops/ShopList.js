@@ -3,7 +3,7 @@ import ShopSummary from './ShopSummary';
 import { Link } from 'react-router-dom';
 
 const ShopList = ({ shops, clickshop, reviews, suburb }) => {
-
+    
     const newShops = shops && shops.map(shop => {
         return (
             <div key={shop.id} >

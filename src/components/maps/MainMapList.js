@@ -21,32 +21,27 @@ export class MainMapList extends Component {
         )
 
         const Wrapper = styled.div`
-            background-color: red;
+            height: 400px;
+            position: relative;
 
-            .mainmapcontainer {
-                height: 400px;
-                position: relative;
-
-                @media only screen and (min-width: 600px) {
-                    height: 100vh;
-                }
+            @media only screen and (min-width: 600px) {
+                height: calc(100vh - 64px);
             }
         `          
        
         return (
             <Wrapper>
-                <div className="mainmapcontainer">
-                    <Map google={this.props.google}
-                        initialCenter={{
-                            lat: -33.853159,
-                            lng: 151.2098305
-                        }}
-                        style={mapstyle}
-                        className='map'
-                        zoom={15}>
-                        {newShops}
-                    </Map>
-                </div>
+                <Map google={this.props.google}
+                    initialCenter={{
+                        lat: -33.8543796,
+                        lng: 151.2444845
+                        // to do:
+                    }}
+                    style={mapstyle}
+                    className='map'
+                    zoom={11}>
+                    {newShops}
+                </Map>
             </Wrapper>
         );
     } 

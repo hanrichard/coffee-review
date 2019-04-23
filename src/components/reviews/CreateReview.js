@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {createReview} from '../../store/actions/shopsActions'
 import {Redirect} from 'react-router-dom'
 import StarRatingComponent from 'react-star-rating-component';
+import styled from 'styled-components'
 
 class CreateReview extends Component {
     constructor(props) {
@@ -47,7 +48,20 @@ class CreateReview extends Component {
 
     render() {
         const {auth, suburb} = this.props;
-        console.log(suburb)
+
+        const Wrapper = styled.div`
+            .StarRatingComponent{
+                margin-right: 10px;
+                label{
+                    font-size: 24px;
+                }
+            }
+            .StarRatingComponent-wrapper {
+                display: flex;
+                align-items: center
+            }
+        `
+
         if (auth.uid) {
             this.state.loggedin = true
         } else {
@@ -60,7 +74,7 @@ class CreateReview extends Component {
         if (this.state.submitted) {
             return <h1>thanks for your review</h1>
         } else {
-            return (
+            return (  
                 <div className="card">
                     <form className="card-content" onSubmit={this.handleSubmit}>
                         <h5>
@@ -71,12 +85,14 @@ class CreateReview extends Component {
 
                         <div className="StarRatingComponent-wrapper">
                             <label>coffee quality </label>
-                            <StarRatingComponent
-                                className="StarRatingComponent"
-                                name="rate1"
-                                starCount={5}
-                                value={this.state.coffee}
-                                onStarClick={this.onStarClick.bind(this)}/>
+                                <Wrapper>
+                                    <StarRatingComponent
+                                        className="StarRatingComponent"
+                                        name="rate1"
+                                        starCount={5}
+                                        value={this.state.coffee}
+                                        onStarClick={this.onStarClick.bind(this)}/>
+                                </Wrapper>
                                 </div>
                         </div>
 

@@ -6,6 +6,7 @@ import {Redirect} from 'react-router-dom'
 import ShopList from '../components/shops/ShopList';
 import MainMapList from '../components/maps/MainMapList';
 import {clickshop} from '../store/actions/shopsActions'
+import styled from 'styled-components'
 
 class Shops extends Component {
 
@@ -20,26 +21,52 @@ class Shops extends Component {
         }
 
         const {shops, reviews, auth, notifications } = this.props;
+
+        const Wrapper = styled.div`
+            .dashboard-list {
+                padding: 10px 20px;
+
+                @media only screen and (min-width: 600px) {
+                    overflow: auto;
+                    height: calc(100vh - 64px);
+                }
+            }
+            .dashboard-map {
+                @media only screen and (min-width: 600px) {
+                    height: 100vh
+                    margin-right: -24px;
+                }
+            }
+            .dashboard {
+                @media only screen and (min-width: 600px) {
+                    overflow: hidden;
+                    height: calc(100vh - 64px);
+                }
+            }
+        `          
+       
         // if(!auth.uid) return <Redirect to='/signin' /> console.log(this.props.shops)
-        console.log(reviews)
-        console.log(this.props.match.params.suburb)
+
         return (
-            <div className="dashboard">
-                <div className="row">
+            <Wrapper>
+                <div className="dashboard">
+                    <div className="row">
 
-                    <div className="col s12 m9 push-m3 ">
-                        <MainMapList shops={shops}/>
+                        <div className="col s12 l9 push-l3 ">
+                            <div className="dashboard-map">
+                                <MainMapList shops={shops}/>
+                            </div>
+                        </div>
+
+
+                        <div className="col s12 l3 pull-l9">
+                            <div className="dashboard-list">
+                                { showshoplist() }
+                            </div>
+                        </div>
                     </div>
-
-
-                    <div className="col s12 m3 pull-m9">
-                        
-                        { showshoplist() }
-
-                    </div>
-
                 </div>
-            </div>
+            </Wrapper>
         )
     }
 }

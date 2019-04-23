@@ -194,8 +194,6 @@ export default compose(firestoreConnect((props) => [
             where: [
                 ['shopid', '==', props.match.params.id]
             ],
-            // orderBy: 'coffee',
-            // limit: 8
         }, 
 ]), connect((state, ownProps) => ({
     shops: state.firestore.data.shops,
