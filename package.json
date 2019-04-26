@@ -7,7 +7,6 @@
     "google-map-react": "^1.1.2",
     "google-maps-react": "^2.0.2",
     "moment": "^2.24.0",
-    "node-sass": "^4.11.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
@@ -28,5 +27,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.30.0"
   }
 }

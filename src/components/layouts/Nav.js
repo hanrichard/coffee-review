@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Signedinlink from './Signedinlink';
 import Signoutlink from './Signoutlink';
 import { connect } from 'react-redux';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.nav`
     position: sticky;
