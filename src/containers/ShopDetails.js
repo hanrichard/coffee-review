@@ -18,12 +18,12 @@ class ShopDetails extends Component {
     handleChange = (event) => {
         this.setState({value: event.target.value});
     }
+    
 
     render() {
         const {shops, reviews, users, auth, shopsOrder} = this.props;
         const shopid = this.props.match.params.id;
         const shopsubub = this.props.match.params.suburb;
-        const Marker = () => <div className="marker"></div>
 
         const arrayToObject = (array) => array.reduce((obj, item) => {
             obj[item.id] = item
@@ -41,13 +41,15 @@ class ShopDetails extends Component {
                 return (
                     <div className="shopReview">
                         <div className="shopReview-total">
-                            <h5 className="StarRatingComponent-wrapper">
-                            <b>{parseFloat(relativeReviewsTotal / relativeReviewsNumber).toFixed(1)} 
-                            </b></h5>
+                            <div className="StarRatingComponent-wrapper">
+                                <b>{parseFloat(relativeReviewsTotal / relativeReviewsNumber).toFixed(1)} 
+                                </b>
+                            </div>
                         </div>
-                        <div className="shopReview-reviews">
-                            {relativeReviewsNumber} reviews
-                        </div>
+
+                        <a href="#reviews" className="shopReview-reviews">
+                            Total {relativeReviewsNumber} reviews
+                        </a>
                     </div>
 
                 )
@@ -105,7 +107,7 @@ class ShopDetails extends Component {
             if (newshop) {
                 const suburbName = this.props.match.params.suburb;
                 let center = [newshop.shoplat, newshop.shoplon]
-                console.log(center)
+                
                 return (
                     <div className="container section">
                         <div className="">
@@ -135,32 +137,31 @@ class ShopDetails extends Component {
     
                                     <div className="row">
                                         <div className="col s12 m8">
+                                            <CreateReview 
+                                                suburb={shopsubub}
+                                                shopname={newshop.shopname} 
+                                                shopid={shopid} 
+                                                userid={auth.uid}/>
+                                            <br />
+                                            <hr/>
+                                            <br />
 
-                                        <CreateReview 
-                                            suburb={shopsubub}
-                                            shopname={newshop.shopname} 
-                                            shopid={shopid} 
-                                            userid={auth.uid}/>
-                                        <br />
-                                        <hr/>
-                                        <br />
-
-                                        <form className="select-wrapper">
-                                            <select
-                                                className="select"
-                                                value={this.state.value}
-                                                onChange={this.handleChange}>
-                                                <option defaultValue="highest">highest review</option>
-                                                <option value="lowest">lowest review</option>
-                                                <option value="newest">newest review</option>
-                                                <option value="oldest">oldest review</option>
-                                            </select>
-                                        </form>
-                                            {reviewRender()}
+                                            <form className="select-wrapper">
+                                                <select
+                                                    className="select"
+                                                    value={this.state.value}
+                                                    onChange={this.handleChange}>
+                                                    <option defaultValue="highest">highest review</option>
+                                                    <option value="lowest">lowest review</option>
+                                                    <option value="newest">newest review</option>
+                                                    <option value="oldest">oldest review</option>
+                                                </select>
+                                            </form>
+                                            <div id="reviews"> {reviewRender()}</div>
                                         </div>
                                         
                                         <div className="col s12 m4">
-                                            <h4>Coffees in nearby</h4>
+                                            <h4>Coffees in nearby <b>{suburbName}</b></h4>
                                             <ShopSimpleList shops={shopsOrder} />
                                         </div>
                                     </div>    
@@ -174,7 +175,7 @@ class ShopDetails extends Component {
             }
 
         }
-        console.log(shops)
+        
         return (
             <div className="shopdetail-layout">
                 <div>{renderShopDetial()}</div>

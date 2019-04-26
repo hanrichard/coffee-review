@@ -1,13 +1,21 @@
 import React from 'react';
 import ShopSummary from './ShopSummary';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+    select {
+        margin-top: 10px;
+        display: block;
+    }
+    .shoplist {
+    }
+`     
 
 const ShopList = ({ shops, clickshop, reviews, suburb }) => {
-    
     const newShops = shops && shops.map(shop => {
         return (
             <div key={shop.id} >
-
                 <Link  
                     to={suburb + '/' + shop.id} 
                     >
@@ -23,12 +31,13 @@ const ShopList = ({ shops, clickshop, reviews, suburb }) => {
         
     if(newShops) {
         return (
-            <div>
+            <Wrapper>
                 <Link to={'/'}>Home</Link>
-                <div className="project-list section">
+                <select className="shopsort"><option>shop sort</option></select>
+                <div className="shoplist section">
                     { newShops }
                 </div>
-            </div>
+            </Wrapper>
         )
     }
     else {
@@ -37,4 +46,4 @@ const ShopList = ({ shops, clickshop, reviews, suburb }) => {
 }
 
 
-export default ShopList
+export default styled(ShopList)`background: red `

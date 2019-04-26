@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 import Signedinlink from './Signedinlink';
 import Signoutlink from './Signoutlink';
 import { connect } from 'react-redux';
+import styled from 'styled-components'
+
+const Wrapper = styled.nav`
+    position: sticky;
+    top: 0;
+    z-index: 2;
+`
 
 const Nav = (props) => {
     const { auth, profile } = props;
@@ -10,20 +17,12 @@ const Nav = (props) => {
     const links = auth.uid ? <Signedinlink profile={profile}/> : <Signoutlink /> 
 
     return (
-        <nav className="nav-wrapper grey darken-3">
+        <Wrapper className="nav-wrapper grey darken-3">
             <div className="container">
                 <Link to='/' className=" floating left">COFFEE REVIEW</Link>
-
                 { links }
-
-                {/* <ul className="right">
-                    <li>
-                        <Link to='/shops' className=" floating right">Shops</Link>
-                    </li>
-                </ul> */}
-                
             </div>
-        </nav>
+        </Wrapper>
     )
 }
 

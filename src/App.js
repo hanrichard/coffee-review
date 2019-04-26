@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Nav from './components/layouts/Nav';
-import Homepage from './components/layouts/Homepage'
-import Shops from './containers/Shops'
+import Homepage from './components/layouts/Homepage';
+import Shops from './containers/Shops';
 // import Shops from './containers/ShopsLanding'
-import Reviews from './containers/Reviews'
-import ShopDetails from './containers/ShopDetails'
-import Signin from './components/auth/Signin'
-import Signup from './components/auth/Signup'
+import Reviews from './containers/Reviews';
+import ShopDetails from './containers/ShopDetails';
+import Signin from './components/auth/Signin';
+import Signup from './components/auth/Signup';
 
 
 class App extends Component {

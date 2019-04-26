@@ -39,7 +39,7 @@ export class MainMapList extends Component {
                     }}
                     style={mapstyle}
                     className='map'
-                    zoom={11}>
+                    zoom={15}>
                     {newShops}
                 </Map>
             </Wrapper>
