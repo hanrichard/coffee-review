@@ -5,11 +5,30 @@ import {compose} from 'redux';
 import {Redirect} from 'react-router-dom';
 import ShopList from '../components/shops/ShopList';
 import MainMapList from '../components/maps/MainMapList';
+import Demo from '../components/maps/Demo';
 import {clickshop} from '../store/actions/shopsActions';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 class Shops extends Component {
+
+
+    state = { userLocation: { lat: -33.8366159, lng: 151.2008305 }, loading: true };
+
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const { latitude, longitude } = position.coords;
+
+                this.setState({
+                        userLocation: { lat: latitude, lng: longitude },
+                        loading: false
+                    });
+                },
+                () => {this.setState({ loading: false });
+            }
+        );
+    }
 
     render() {
         const showshoplist = () => {
@@ -60,7 +79,7 @@ class Shops extends Component {
 
                         <div className="col s12 l9 push-l3 ">
                             <div className="dashboard-map">
-                                <MainMapList shops={shops}/>
+                                <MainMapList shops={shops} userLocation={this.state.userLocation}/>
                             </div>
                         </div>
 

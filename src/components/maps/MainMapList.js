@@ -4,8 +4,10 @@ import styled from 'styled-components'
 
 
 export class MainMapList extends Component {
+
     render() {
-        const {shops} = this.props
+        const {shops, userLocation} = this.props;
+        console.log(userLocation)
         let pos = []
         const mapstyle = {
             width: '100%', 
@@ -32,14 +34,10 @@ export class MainMapList extends Component {
         return (
             <Wrapper>
                 <Map google={this.props.google}
-                    initialCenter={{
-                        lat: -33.8543796,
-                        lng: 151.2444845
-                        // to do:
-                    }}
+                    initialCenter={userLocation}
                     style={mapstyle}
                     className='map'
-                    zoom={15}>
+                    zoom={12}>
                     {newShops}
                 </Map>
             </Wrapper>
