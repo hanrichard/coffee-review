@@ -7,7 +7,6 @@ export class MainMapList extends Component {
 
     render() {
         const {shops, userLocation} = this.props;
-        console.log(userLocation)
         let pos = []
         const mapstyle = {
             width: '100%', 
@@ -25,9 +24,11 @@ export class MainMapList extends Component {
         const Wrapper = styled.div`
             height: 400px;
             position: relative;
+            margin-top: 10px;
 
-            @media only screen and (min-width: 600px) {
+            @media only screen and (min-width: 992px) {
                 height: calc(100vh - 64px);
+                margin-top: 0;
             }
         `          
        

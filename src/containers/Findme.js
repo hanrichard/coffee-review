@@ -10,17 +10,35 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ShopsList from './ShopsList';
 
-class Shops extends Component {
+class Findme extends Component {
+    state = { 
+        userLocation: { lat: -33.8366159, lng: 151.2008305 }, 
+        loading: true 
+    };
+
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const { latitude, longitude } = position.coords;
+                this.setState({
+                        userLocation: { lat: latitude, lng: longitude },
+                        loading: false
+                    });
+                },
+                () => {this.setState({ loading: false });
+            }
+        );
+    }
+
     render() {
         const {shops, reviews, auth, notifications } = this.props; 
-        const userLocation = { lat: -33.8366159, lng: 151.2008305 };
-
+        
         return (
             <ShopsList 
                 shops={shops} 
                 reviews={reviews} 
-                userLocation={userLocation}
-                suburb={this.props.match.params.suburb}
+                userLocation={this.state.userLocation}
+                suburb="north sydney"
             />
         )
     }
@@ -29,17 +47,17 @@ class Shops extends Component {
 export default compose(firestoreConnect((props) => [
     {collection: 'shops',
         where: [
-            ['suburb', '==', props.match.params.suburb.replace("-", " ")]
+            ['suburb', '==', 'north sydney']
         ],
     
     },
     {collection: 'reviews',
         where: [
-            ['suburb', '==', props.match.params.suburb.replace("-", " ")]
+            ['suburb', '==', 'north sydney']
         ]
     }
 ]), connect((state) => ({
     shops: state.firestore.ordered.shops,
     reviews: state.firestore.ordered.reviews,
   })
-))(Shops)
+))(Findme)

@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Nav from './components/layouts/Nav';
 import Homepage from './components/layouts/Homepage';
 import Shops from './containers/Shops';
-// import Shops from './containers/ShopsLanding'
+import Findme from './containers/Findme';
 import Reviews from './containers/Reviews';
 import ShopDetails from './containers/ShopDetails';
 import Signin from './components/auth/Signin';
@@ -97,6 +97,7 @@ class App extends Component {
             <Route exact path='/reviews/' component={Reviews} />
             <Route exact path='/signin' component={Signin} /> 
             <Route exact path='/signup' component={Signup} /> 
+            <Route exact path='/findme' component={Findme} /> 
             <Route exact path='/:suburb' component={Shops} />
           </Switch>
         </Wrapper>
