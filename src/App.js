@@ -39,6 +39,10 @@ class App extends Component {
         padding-bottom: 10px;
         margin-bottom: 10px;
         border-bottom: 1px solid black;
+
+        &:last-child {
+          border-bottom: 0;
+        }
       }
 
       .reviewCard-user {

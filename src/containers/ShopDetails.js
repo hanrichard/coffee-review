@@ -20,6 +20,13 @@ class ShopDetails extends Component {
     }
 
     render() {
+        const sortoptions = [
+            'highest',
+            'lowest',
+            'newest',
+            'oldest'
+        ]
+
         const {shops, reviews, users, auth, shopsOrder} = this.props;
         const shopid = this.props.match.params.id;
         const shopsurbub = this.props.match.params.suburb;
@@ -60,13 +67,13 @@ class ShopDetails extends Component {
         const reviewRender = () => { 
             let newreviews = reviews;
 
-            if (reviews && this.state.value === "highest") {
+            if (reviews && this.state.value === sortoptions[0]) {
                 newreviews = reviews.sort((a,b) => a.coffee > b.coffee)
-            } else if (reviews && this.state.value === "lowest") {
+            } else if (reviews && this.state.value === sortoptions[1]) {
                 newreviews = reviews.sort((a,b) => a.coffee < b.coffee)
-            } else if (reviews && this.state.value === "newest") {
+            } else if (reviews && this.state.value === sortoptions[2]) {
                 newreviews = reviews.sort((a,b) => a.createdat > b.createdat)
-            } else if (reviews && this.state.value === "oldest") {
+            } else if (reviews && this.state.value === sortoptions[3]) {
                 newreviews = reviews.sort((a,b) => a.createdat < b.createdat)
             }
 
@@ -147,16 +154,21 @@ class ShopDetails extends Component {
                                             <br />
 
                                             <form className="select-wrapper">
-                                                <select
-                                                    className="select"
-                                                    value={this.state.value}
-                                                    onChange={this.handleChange}>
-                                                    
-                                                    <option defaultValue="highest">highest review</option>
-                                                    <option value="lowest">lowest review</option>
-                                                    <option value="newest">newest review</option>
-                                                    <option value="oldest">oldest review</option>
-                                                </select>
+                                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                                    <span>sort by: </span>
+                                                    <select
+                                                        className="select"
+                                                        value={this.state.value}
+                                                        onChange={this.handleChange}
+                                                        >
+                                                            { sortoptions.map((option, index) => {
+                                                                return (
+                                                                    <option value={option.value} key={index}> {option}</option>
+                                                                    )
+                                                                })
+                                                            }
+                                                    </select>
+                                                </div>
                                             </form>
                                             <div id="reviews"> {reviewRender()}</div>
                                         </div>
