@@ -13,8 +13,6 @@ class ShopsList extends Component {
     render() {
         const {shops, reviews, userLocation, suburb, auth, notifications } = this.props;
 
-        console.log("userLocation suburb 123123---" + suburb)
-
         const Wrapper = styled.div`
             .dashboard-list {
                 padding: 10px 20px;

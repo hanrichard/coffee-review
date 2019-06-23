@@ -4,31 +4,22 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ShopSimpleList = ({ shops }) => {
-    console.log(shops)
-    
     const newShops = shops && shops.map(shop => {
         return (
-                <Link key={shop.id}  
-                    to={'/' + shop.suburb.replace(' ','-') + '/' + shop.id} 
-                    >
-                    <ShopSummary 
-                        shop = {shop} 
-                    /> 
-                </Link>
+            <Link key={shop.id}  
+                to={'/' + shop.suburb.replace(' ','-') + '/' + shop.id} 
+                >
+                <ShopSummary 
+                    shop = {shop} 
+                /> 
+            </Link>
             )
         }
     )
 
-    if(newShops) {
-        return (
-            <div className="project-list section">
-                { newShops }
-            </div>
-        )
-    }
-    else {
-        return <div className="container center">loading...</div>
-    }
+    return(
+        <div className="project-list section"> { newShops ?  newShops : "loading..." } </div>
+    )
 }
 
 

@@ -18,17 +18,16 @@ class ShopDetails extends Component {
     handleChange = (event) => {
         this.setState({value: event.target.value});
     }
-    
 
     render() {
         const {shops, reviews, users, auth, shopsOrder} = this.props;
         const shopid = this.props.match.params.id;
-        const shopsubub = this.props.match.params.suburb;
+        const shopsurbub = this.props.match.params.suburb;
 
-        const arrayToObject = (array) => array.reduce((obj, item) => {
-            obj[item.id] = item
-            return obj
-        }, {})
+        const userRender = (userid) => {
+            return (
+                users && users[userid] ? users[userid]['name'] : <span>User not found</span>
+        )}   
 
         const totalReviews = () => {
             if (reviews) {
@@ -56,50 +55,51 @@ class ShopDetails extends Component {
             } else {
                 return <span>no total review</span>
             }
-        }
+        } 
 
-        const userRender = (userid) => {
-            if(users) {
-                let user = users[userid]
-                console.log(user)
-                if(user) {
-                    return user['name']
-                }
-                else {
-                    return <span>not found</span>
-                }
+        const reviewRender = () => { 
+            let newreviews = reviews;
+
+            if (reviews && this.state.value === "highest") {
+                newreviews = reviews.sort((a,b) => a.coffee > b.coffee)
+            } else if (reviews && this.state.value === "lowest") {
+                newreviews = reviews.sort((a,b) => a.coffee < b.coffee)
+            } else if (reviews && this.state.value === "newest") {
+                newreviews = reviews.sort((a,b) => a.createdat > b.createdat)
+            } else if (reviews && this.state.value === "oldest") {
+                newreviews = reviews.sort((a,b) => a.createdat < b.createdat)
             }
-        }
 
-        const reviewRender = () => {
-            if (reviews) {
-                return (reviews.map(review => {
+            return (
+                reviews 
+                ?
+                newreviews.map(review => {
                     return (
                         <div key={review.id} className="reviewCard">
                             <h5>
                                 <b>{userRender(review.userid)}</b>'s reviews
                             </h5>
                             <div className="reviewCard-content">
-                            <div className="StarRatingComponent-wrapper">
-                                <b>coffee: </b>
-                                <StarRatingComponent 
-                                    className="StarRatingComponent"
-                                    name="test"
-                                    value={parseFloat(review.coffee)}/>
-                            </div>
-
+                                <div className="StarRatingComponent-wrapper">
+                                    <b>coffee: </b>
+                                    <StarRatingComponent 
+                                        className="StarRatingComponent"
+                                        name="test"
+                                        value={parseFloat(review.coffee)}/>
+                                </div>
                                 <b>Review: </b>{review.review}
-                                
+                                    
                                 <div className="review-small">
-                                <b>Date: </b>
-                                {moment(review.createdat.toDate()).calendar()}</div>
+                                    <b>Date: </b>
+                                    {moment(review.createdat.toDate()).calendar()}
+                                </div>
                             </div>
                         </div>
                     )
-                }))
-            } else {
-                return <div className="container center">loading...</div>
-            }
+                })
+                :
+                <div className="container center">loading...</div>
+            )
         }
 
         const renderShopDetial = () => {
@@ -138,7 +138,7 @@ class ShopDetails extends Component {
                                     <div className="row">
                                         <div className="col s12 m8">
                                             <CreateReview 
-                                                suburb={shopsubub}
+                                                suburb={shopsurbub}
                                                 shopname={newshop.shopname} 
                                                 shopid={shopid} 
                                                 userid={auth.uid}/>
@@ -151,6 +151,7 @@ class ShopDetails extends Component {
                                                     className="select"
                                                     value={this.state.value}
                                                     onChange={this.handleChange}>
+                                                    
                                                     <option defaultValue="highest">highest review</option>
                                                     <option value="lowest">lowest review</option>
                                                     <option value="newest">newest review</option>

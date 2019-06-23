@@ -16,11 +16,9 @@ const ShopList = ({ shops, clickshop, reviews, suburb }) => {
     const newShops = shops && shops.map(shop => {
         return (
             <div key={shop.id} >
-                <Link  
-                    to={suburb + '/' + shop.id} 
-                    >
+                <Link to={suburb + '/' + shop.id} >
                     <ShopSummary 
-                        shop = {shop} 
+                        shop={shop} 
                         reviews={reviews}
                     /> 
                 </Link>
@@ -28,22 +26,25 @@ const ShopList = ({ shops, clickshop, reviews, suburb }) => {
             )   
         } 
     )
-        
-    if(newShops) {
-        return (
-            <Wrapper>
-                <Link to={'/'}>Home</Link>
-                <select className="shopsort"><option>shop sort</option></select>
-                <div className="shoplist section">
-                    { newShops }
-                </div>
-            </Wrapper>
-        )
-    }
-    else {
-        return <div className="container center">loading...</div>
-    }
+     
+    return (
+        newShops ? 
+        <Wrapper>
+            <Link to={'/'}>Home</Link>
+
+            <select className="shopsort">
+                <option>shop review highest</option>
+                <option>shop review lowest</option>
+                <option>shop review oldest</option>
+                <option>shop review newest</option>
+            </select>
+            <div className="shoplist section">
+                { newShops }
+            </div>
+        </Wrapper>
+        :
+        <div className="container center">loading...</div>
+    )
 }
 
-
-export default styled(ShopList)`background: red `
+export default ShopList
