@@ -11,7 +11,6 @@ import Signin from './components/auth/Signin';
 import Signup from './components/auth/Signup';
 import styled from 'styled-components';
 
-
 class App extends Component {
   render() {
     const Wrapper = styled.div`
