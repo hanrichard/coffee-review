@@ -8,7 +8,16 @@ const Wrapper = styled.div`
         margin-top: 10px;
         display: block;
     }
-    .shoplist {
+
+    .shops__show-results {
+        display: flex;
+        align-items: center;
+         
+        label {
+            color: #000000;
+            font-weight: bold;
+            flex: 1 1 200px;
+        }
     }
 `   
 
@@ -119,7 +128,7 @@ class ShopList extends Component {
 
 
                 <div className="shops__show-results">
-                    <label>Average review: </label>
+                    <label>Minimum score: </label>
                     <select 
                         className="shopsort"
                         value={this.state.reviewsNumber}
@@ -136,7 +145,7 @@ class ShopList extends Component {
 
 
                 <div className="shops__show-results">
-                    <label>Total review amount: </label>
+                    <label>Minimum reviews: </label>
                     <select 
                         className="shopsort"
                         value={this.state.reviewsAmount}

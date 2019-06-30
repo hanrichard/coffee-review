@@ -23,6 +23,9 @@ class App extends Component {
 
       select {
         display: block;
+        border: 1px solid black;
+        -webkit-appearance: none; 
+        -moz-appearance: none;
       }
 
       .select-wrapper {
