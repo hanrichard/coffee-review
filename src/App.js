@@ -10,6 +10,7 @@ import ShopDetails from './containers/ShopDetails';
 import Signin from './components/auth/Signin';
 import Signup from './components/auth/Signup';
 import styled from 'styled-components';
+// import index from 'styled-components';
 
 class App extends Component {
   render() {
