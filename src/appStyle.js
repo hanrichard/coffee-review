@@ -1,16 +1,6 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+import styled, { css } from 'styled-components';
 
-  background-color: red !important
-}
-
+const componentStyle = css`
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -19,6 +9,9 @@ code {
 
 select {
   display: block;
+  border: 1px solid black;
+  -webkit-appearance: none; 
+  -moz-appearance: none;
 }
 
 .select-wrapper {
@@ -31,12 +24,14 @@ select {
   text-align: right;
 }
 
-
-
 .reviewCard {
   padding-bottom: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid red;
+
+  &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .reviewCard-user {
@@ -83,4 +78,6 @@ select {
 .simplemap {
   position: relative;
 }
+`
 
+export default componentStyle
