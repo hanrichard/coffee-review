@@ -3,10 +3,23 @@ import ShopSummary from './ShopSummary';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { makeStyles } from '@material-ui/core/styles';
+
+import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FilledInput from '@material-ui/core/FilledInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+
 const Wrapper = styled.div`
-    select {
+    .select .shopsort{
         margin-top: 10px;
         display: block;
+        width: 100%;
     }
 
     .shops__show-results {
@@ -19,13 +32,22 @@ const Wrapper = styled.div`
             flex: 1 1 200px;
         }
     }
+    .selectEmpty {
+        display: flex;
+        text-align: left;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+    .selectclass {
+        width: 100%
+    }
 `   
 
 class ShopList extends Component {
     state = {
-        value: 'highest scores',
-        reviewsNumber: 1,
-        reviewsAmount: 0
+        value: '',
+        reviewsNumber: '',
+        reviewsAmount: ''
     }
 
     handleChange = (event) => {
@@ -42,6 +64,8 @@ class ShopList extends Component {
 
 
     render() {
+       
+          
         const sortoptions = [
             'highest scores',
             'lowest scores',
@@ -111,56 +135,89 @@ class ShopList extends Component {
         }
         
         return (
-            <Wrapper>
-                <label>Sort by: </label>
-                <select 
-                    className="shopsort"
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                >
-                    { sortoptions.map((option, index) => {
-                        return (
-                            <option value={option} key={index}> {option}</option>
-                            )
-                        })
-                    }
-                </select>
+            <Wrapper>        
+                <div variant="filled" className="formControl select"
+                        classes={{root: 'selectWrapperclass'}}
 
+                style={{
+                    width: '100%'
+                }}>
+                    <Select
+                        className="shopsort"
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                        name="age"
+                        displayEmpty
+                        className="selectEmpty"
+                        classes={{root: 'selectclass'}}
+                        >
+                        <MenuItem value="" disabled>
+                            Sort by
+                        </MenuItem>
 
-                <div className="shops__show-results">
-                    <label>Minimum score: </label>
-                    <select 
+                        { sortoptions.map((option, index) => {
+                            return (
+                                <MenuItem value={option} key={index}> {option}</MenuItem>
+                                )
+                            })
+                        }
+                    </Select>  
+                </div>   
+
+                 <div variant="filled" className="formControl select"
+                style={{
+                    width: '100%'
+                }}>
+                    <Select
                         className="shopsort"
                         value={this.state.reviewsNumber}
                         onChange={this.handleReviewNumberChange}
-                    >
+                        name="age"
+                        displayEmpty
+                        classes={{root: 'selectclass'}}
+                        className="selectEmpty"
+                        >
+                        <MenuItem value="" disabled>
+                            Minimum scores:
+                        </MenuItem>
+
                         { sortReviewNumberoptions.map((option, index) => {
                             return (
-                                <option value={option} key={index}> {option}</option>
+                                <MenuItem value={option} key={index}> {option}</MenuItem>
                                 )
                             })
                         }
-                    </select>
-                </div>
+                    </Select>  
+                </div>     
 
+            
 
-                <div className="shops__show-results">
-                    <label>Minimum reviews: </label>
-                    <select 
+                 <div variant="filled" className="formControl select"
+                style={{
+                    width: '100%'
+                }}>
+                    <Select
                         className="shopsort"
                         value={this.state.reviewsAmount}
                         onChange={this.handleReviewAmountChange}
-                    >
+                        name="age"
+                        displayEmpty
+                        classes={{root: 'selectclass'}}
+                        className="selectEmpty"
+                        >
+                        <MenuItem value="" disabled>
+                            Minimum reviews:
+                        </MenuItem>
+
                         { sortReviewAmountroptions.map((option, index) => {
                             return (
-                                <option value={option} key={index}> {option}+</option>
+                                <MenuItem value={option} key={index}> {option}</MenuItem>
                                 )
                             })
                         }
-                    </select>
-                </div>
-
-                
+                    </Select>  
+                </div>      
+                   
                 <div className="shoplist section">
 
                 { renderShop() }

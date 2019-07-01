@@ -8,7 +8,6 @@ import Demo from '../maps/Demo';
 
 const Homepage = (props) => {
     // const { auth, profile } = props;
-    // console.log(auth)
     // const links = auth.uid ? <Signedinlink profile={profile}/> : <Signoutlink /> 
     const Wrapper = styled.div`
         img {

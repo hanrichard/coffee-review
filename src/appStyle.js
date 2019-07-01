@@ -27,7 +27,7 @@ select {
 .reviewCard {
   padding-bottom: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid black;
 
   &:last-child {
     border-bottom: 0;
