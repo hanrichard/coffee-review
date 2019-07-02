@@ -2,11 +2,11 @@ import React from 'react';
 
 const ShopSimpleSummary = ({shop}) => {
     return (
-        <div className="collection">
-            <div>
-                <span className="card-title">{shop.shopname}</span>
-                <span>Address: {shop.address}, {shop.suburb}</span>
-           </div>
+        <div className="card">
+            <div className="card-content" style={{padding: 5}}>
+                <div><b>{shop.shopname}</b></div>
+                <div>Address: {shop.address}, {shop.suburb}</div>
+            </div>   
         </div>
     )
 }

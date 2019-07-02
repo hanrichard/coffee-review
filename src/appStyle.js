@@ -46,18 +46,25 @@ select {
   display: inline-flex;
   align-items: center;
   align-content: center;
-  width: 100px;
+  
   border: 1px solid black;
-  border-radius: 100px;
-  height :100px;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 50px;
+  border-radius: 20px;
+  margin-left: 10px;
+  padding: 2px;
+}
+
+.shopReview-total {
+  margin-right: 5px;
+}
+
+.shopReview-reviews {
+  text-align: center
 }
 
 .reviewTotal-card-titile {
   display: flex;
   align-items: center;
+  text-transform: uppercase
 }
 
 .shopReview-total .StarRatingComponent-wrapper{

@@ -9,10 +9,13 @@ import SimpleMap from '../components/maps/SimpleMap';
 import StarRatingComponent from 'react-star-rating-component';
 import ShopSimpleList from '../components/shops/ShopSimpleList';
 
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+
 
 class ShopDetails extends Component {
     state = {
-        value: 'highest'
+        value: ''
     }
 
     handleChange = (event) => {
@@ -127,7 +130,7 @@ class ShopDetails extends Component {
                         <div className="">
                             <div className="card-content">
                                 <div className="card-titile reviewTotal-card-titile">
-                                    <h3>{newshop.shopname}</h3>
+                                    <h3><b>{newshop.shopname}</b></h3>
                                     {totalReviews()}
                                 </div>
                                 <div className="card-content">
@@ -155,19 +158,32 @@ class ShopDetails extends Component {
 
                                             <form className="select-wrapper">
                                                 <div style={{display: 'flex', alignItems: 'center'}}>
-                                                    <span>sort by: </span>
-                                                    <select
-                                                        className="select"
-                                                        value={this.state.value}
-                                                        onChange={this.handleChange}
-                                                        >
+                                                <div variant="filled" className="formControl select"
+                                                    style={{
+                                                        width: '100%'
+                                                    }}>
+                                                        <Select
+                                                            className="shopsort"
+                                                            value={this.state.value}
+                                                            onChange={this.handleChange}
+                                                            name="age"
+                                                            displayEmpty
+                                                            classes={{root: 'selectclass'}}
+                                                            className="selectEmpty"
+                                                            >
+                                                            <MenuItem value="" disabled>
+                                                                Sort by
+                                                            </MenuItem>
+
                                                             { sortoptions.map((option, index) => {
                                                                 return (
-                                                                    <option value={option.value} key={index}> {option}</option>
+                                                                    <MenuItem value={option} key={index}> {option}</MenuItem>
                                                                     )
                                                                 })
                                                             }
-                                                    </select>
+                                                        </Select>  
+                                                    </div> 
+                                                
                                                 </div>
                                             </form>
                                             <div id="reviews"> {reviewRender()}</div>
