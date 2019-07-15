@@ -4,6 +4,8 @@ import {createReview} from '../../store/actions/shopsActions'
 import {Redirect} from 'react-router-dom'
 import StarRatingComponent from 'react-star-rating-component';
 import styled from 'styled-components'
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 
 class CreateReview extends Component {
     constructor(props) {
@@ -104,6 +106,7 @@ class CreateReview extends Component {
                                 className="materialize-textarea"
                                 id="review"
                                 onChange={this.handleChange}/>
+
                         </div>
 
                         <div className="input-file">

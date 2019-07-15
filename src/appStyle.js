@@ -85,6 +85,15 @@ select {
 .simplemap {
   position: relative;
 }
+
+.materialize-textarea {
+  height: 6rem
+}
+
+label {
+  font-size: 1rem;
+  color: black
+}
 `
 
 export default componentStyle
