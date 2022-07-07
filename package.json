@@ -10,7 +10,7 @@
     "firebase-functions": "^3.0.2",
     "google-map-react": "^1.1.2",
     "google-maps-react": "^2.0.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "react": "^16.4.1",
     "react-dev-utils": "^9.0.1",
     "react-dom": "^16.4.1",
